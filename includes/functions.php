@@ -1,15 +1,18 @@
 <?php
 
-include "includes/db.php"; 
 
     function queryAllCategories() {
         global $connection;
         $query = "SELECT * FROM `categories`";
-        $select_all_categories_query = mysqli_query($connection, $query);
+        $result = mysqli_query($connection, $query);
 
-        while ($row = mysqli_fetch_assoc($select_all_categories_query)) {
-        $cat_title = $row["cat_title"];
+        if (!$result) {
+        die('query failed ' . mysqli_error($connection));
+        } else {      
+        while ($row = mysqli_fetch_assoc($result)) {                            
+        $cat_title = $row['cat_title'];              
 
-                echo "<li><a href='#'>{$cat_title}</a></li>";
+        echo "<li><a href='#'>{$cat_title}</a></li>";
+        } 
         }
     }

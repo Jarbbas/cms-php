@@ -1,6 +1,7 @@
 <?php  
     include "includes/messages.php";
-    include "includes/db.php"; 
+    include "includes/db.php";
+    include "includes/functions.php";  
 ?>
     <!-- Header component -->
     <?php include "includes/components/header.php"; ?>

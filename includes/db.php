@@ -18,9 +18,6 @@
     //$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-    $query = "SET NAMES utf8";
-mysqli_query($connection,$query);
-
     //Conection Validation 
-    $connection_result = ($connection) ? "Connection".SUCESS : "Conection".FAIL;
-    echo $connection_result;
+    //$connection_result = ($connection) ? "Connection".SUCESS : "Conection".FAIL;
+    //echo $connection_result;
