@@ -31,21 +31,45 @@
             $post_content = $row['post_content'];              
 
             echo " <h1 class='page-header'>
-            Page Heading
-            <small>Secondary Text</small>
-            </h1>
+                    Page Heading
+                    <small>Secondary Text</small>
+                    </h1>
             <!-- First Blog Post -->
-            <h2>
-            <a href='#'>{$post_title}</a>
-            </h2>
-            <p class='lead'>by <a href='index.php'>Start Bootstrap</a></p>
-            <p><span class='glyphicon glyphicon-time'></span> Posted on {$post_date}</p>
+                    <h2>
+                        <a href='#'>{$post_title}</a>
+                    </h2>
+                    <p class='lead'>by <a href='index.php'>Start Bootstrap</a></p>
+                    <p><span class='glyphicon glyphicon-time'></span> Posted on {$post_date}</p>
             <hr>
-            <img class='img-responsive' src='includes/images/{$post_image}' alt=''>
+                    <img class='img-responsive' src='includes/images/{$post_image}' alt=''>
             <hr>
-            <p>{$post_content}</p>
-            <a class='btn btn-primary' href='#'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a>
+                    <p>{$post_content}</p>
+                    <a class='btn btn-primary' href='#'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a>
             <hr>";
             } 
         }
+    }
+
+    function search() {
+
+        if(isset($_POST['submit'])) {
+
+            echo $search = $_POST['search'];
+          
+        }
+
+       echo"<div class='well'>
+                    <h4>Blog Search</h4>
+                    <form action='' method='post'>
+                    <div class='input-group'>
+                        <input name='search' type='text' class='form-control'>
+                        <span class='input-group-btn'>
+                            <button name='submit' class='btn btn-default' type='submit'>
+                                <span class='glyphicon glyphicon-search'></span>
+                        </button>
+                        </span>
+                    </div>
+                    </form>
+                    <!-- /.input-group -->
+                </div>";
     }
