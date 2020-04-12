@@ -41,7 +41,7 @@
             <p class='lead'>by <a href='index.php'>Start Bootstrap</a></p>
             <p><span class='glyphicon glyphicon-time'></span> Posted on {$post_date}</p>
             <hr>
-            <img class='img-responsive' src='http://placehold.it/900x300' alt=''>
+            <img class='img-responsive' src='includes/images/{$post_image}' alt=''>
             <hr>
             <p>{$post_content}</p>
             <a class='btn btn-primary' href='#'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a>
