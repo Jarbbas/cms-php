@@ -54,7 +54,17 @@
 
         if(isset($_POST['submit'])) {
 
-            echo $search = $_POST['search'];
+            global $connection;
+            $search = $_POST['search'];
+
+            $query = "SELECT * FROM `post` WHERE `post_tags` LIKE '%$search%' ";
+            $result = mysqli_query($connection, $query);
+
+            if (!$result) {
+                die('query failed ' . mysqli_error($connection));
+                    } else {      
+                     echo $count = mysqli_num_rows($result);
+                }
           
         }
 
