@@ -1,8 +1,10 @@
     <?php
 
-    function queryAllCategories() {
+    function queryAllCategories($limit) {
+
     global $connection;
-    $query = "SELECT * FROM `categories`";
+    $cat_limit = (isset($limit)) ? $cat_limit = $limit : $cat_limit = 5;
+    $query = "SELECT * FROM `categories` LIMIT $cat_limit";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
@@ -16,6 +18,7 @@
     }
 
     function queyAllPosts() {
+
     global $connection;
     $query = "SELECT * FROM `post`";
     $result = mysqli_query($connection, $query);
