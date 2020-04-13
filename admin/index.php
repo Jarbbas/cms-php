@@ -1,5 +1,8 @@
-<?php include "includes/components/header.php"; ?>
+<?php include "includes/components/header.php";
 
+if($connection) echo "SUCESS!";
+
+?>
     <div id="wrapper">
 
         <!-- Navigation -->
