@@ -2,7 +2,11 @@
 
                 <!-- Blog Search Well -->
                 
-                <?php search(); ?>
+                <?php 
+                
+                search(); 
+                
+                ?>
 
                 <!-- Blog Categories Well -->
                 <div class="well">
@@ -10,7 +14,19 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <ul class="list-unstyled">
-                              <?php queryAllCategories(5); ?>
+                              <?php
+                               queryAllCategories(5);
+                               
+                               if (!$result) {
+                                die('query failed ' . mysqli_error($connection));
+                                    } else {      
+                                    while ($row = mysqli_fetch_assoc($result)) {                            
+                                    $cat_title = $row['cat_title'];              
+                                    echo "<li><a href='#'>{$cat_title}</a></li>";
+                                    } 
+                                }
+
+                               ?>
                             </ul>
                         </div>
 
