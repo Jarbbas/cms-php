@@ -59,6 +59,24 @@ include_once($path_to_header_admin);
                         </form>                     
                         </div>
 
+                        <div class="col-xs-6">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Category Title</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <tr>
+                                            <td>A</td>
+                                            <td>B</td>
+                                        </tr>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <!-- <ol class="breadcrumb">
                             <li>
