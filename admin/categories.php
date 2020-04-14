@@ -23,15 +23,12 @@ include_once($path_to_messages);
 include_once($path_to_header_admin);
 
 
-
 ?>
     <div id="wrapper">
 
-        <!-- Navigation -->
+    <!-- Navigation -->
 
-<?php 
-    include_once($path_to_navigation_admin); 
-?>
+<?php  include_once($path_to_navigation_admin); ?>
 
         <div id="page-wrapper"> 
 
@@ -69,23 +66,26 @@ include_once($path_to_header_admin);
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <tr>
-                                            <td>A</td>
-                                            <td>B</td>
-                                        </tr>
+                                        <?php 
+                                            queryCountCategories(); //outputs $count so we can list all the categories from MYSQL
+                                            queryAllCategories($count); 
+
+                                            if (!$result) {
+                                                die('query failed ' . mysqli_error($connection));
+                                                    } else {      
+                                                    while ($row = mysqli_fetch_assoc($result)) {                            
+                                                    $cat_title = $row['cat_title']; 
+                                                    $cat_id = $row['cat_id'];             
+                                                    echo "<tr><td>{$cat_id}<td><a href='#'>{$cat_title}</a></td></tr>";
+                                                    } 
+                                                }
+                                        ?>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <!-- <ol class="breadcrumb">
-                            <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
-                            </li>
-                            <li class="active">
-                                <i class="fa fa-file"></i> Blank Page
-                            </li>
-                        </ol> -->
                     </div>
                 </div>
                 <!-- /.row -->
@@ -99,6 +99,4 @@ include_once($path_to_header_admin);
     </div>
     <!-- /#wrapper -->
     
-<?php 
-    include_once($path_to_footer_admin); 
-?>
+<?php include_once($path_to_footer_admin); ?>
