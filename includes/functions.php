@@ -90,7 +90,7 @@
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
         } else {
-            echo SUCESS . "a new categorie added with";
+            echo SUCESS . "a new categorie added";
         }
 }   
 
@@ -111,23 +111,35 @@
 
     }
 
+    function selectCategories(){
+
+        global $connection;
+        global $result;
+        $cat_id =$_GET['update'];
+
+        $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
+        $result = mysqli_query($connection, $query);
+       
+    }
+
     function updateCategories(){
 
         global $connection;
         global $result;
-        $cat_id =$_GET['cat_id'];
+        $cat_id =$_GET['update'];
+        $cat_title =$_POST['cat_title'];
 
         // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
         // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
         $cat_title = mysqli_real_escape_string($connection, $cat_title);
 
-        $query = "INSERT INTO `categories` (`cat_title`) ";
-        $query .= "VALUES('{$cat_title}')";
+        $query = "UPDATE `categories` SET `cat_title` = '{$cat_title}' ";
+        $query .= "WHERE `cat_id` = '{$cat_id}'";
         $result = mysqli_query($connection, $query);
         
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
         } else {
-            echo SUCESS . "a new categorie added with";
+            header("Location: categories.php");
         }
 }
