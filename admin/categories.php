@@ -41,12 +41,26 @@ include_once($path_to_header_admin);
                             Welcome Admin
                             <small>Author</small>
                         </h1>
-
                         <div class="col-xs-6">
-                        <form action="">
+
+                        <?php 
+                            if(isset($_POST['submit'])){
+                                   
+                                $cat_title = $_POST['cat_title'];
+
+                                if($cat_title == "" || empty($cat_title)) { 
+                                         echo "<h4 class='page-header'>" . NOTEMPTY . "</h4>";
+                                    } else {   
+                                          insertCategories();
+                                    }
+                            } 
+                            
+                        ?>
+
+                        <form action="" method="post">
                             <div class="form-group">
-                            <label for="cat-title">Add Category</label>
-                                <input type="text" class="form-control" name="cat-title">
+                            <label for="cat_title">Add Category</label>
+                                <input type="text" class="form-control" name="cat_title">
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-primary" name="submit" value="Add Categorie">
@@ -60,8 +74,8 @@ include_once($path_to_header_admin);
                             <table class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
                                         <th>Category Title</th>
+                                        <th colspan="2">Options</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -76,9 +90,21 @@ include_once($path_to_header_admin);
                                                     while ($row = mysqli_fetch_assoc($result)) {                            
                                                     $cat_title = $row['cat_title']; 
                                                     $cat_id = $row['cat_id'];             
-                                                    echo "<tr><td>{$cat_id}<td><a href='#'>{$cat_title}</a></td></tr>";
+                                                    echo "<tr>
+                                                        <td>{$cat_title}</td>
+                                                        <td><a href='categories.php?update={$cat_id}'>Update</a></td>
+                                                        <td><a href='categories.php?delete={$cat_id}'>Delete</a></td>
+                                                        </tr>";
                                                     } 
                                                 }
+                                                
+                                                //delete query
+                                                if(isset($_GET['delete'])) {
+                                                    deleteCategories();
+                                                }
+                                                if(isset($_GET['update'])) {
+                                                    updateCategories($cat_id);
+                                                }      
                                         ?>
                                         
                                     </tr>

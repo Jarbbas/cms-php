@@ -1,4 +1,5 @@
 <?php
+
     function queryCountCategories() {
 
         global $connection;
@@ -7,6 +8,10 @@
         $query = "SELECT * FROM `categories`";
         $result = mysqli_query($connection, $query);
         $count = mysqli_num_rows($result);
+
+        if (!$result) {
+            die('Query' . FAIL . mysqli_error($connection));
+            }
 
         }
 
@@ -18,6 +23,10 @@
     $query = "SELECT * FROM `categories` ORDER BY `cat_id` ASC LIMIT $cat_limit ";
     $result = mysqli_query($connection, $query);
 
+    if (!$result) {
+        die('Query' . FAIL . mysqli_error($connection));
+        }
+
     }
 
     function queyAllPosts() {
@@ -26,6 +35,10 @@
     global $result;
     $query = "SELECT * FROM `post`";
     $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+        die('Query' . FAIL . mysqli_error($connection));
+        }
    
     }
 
@@ -34,39 +47,87 @@
         global $connection;
         global $result;
         global $count;
+
         $search = $_POST['search'];
+
         $query = "SELECT * FROM `post` WHERE `post_tags` LIKE '%$search%' ";
         $result = mysqli_query($connection, $query);
         $count = mysqli_num_rows($result);
+
+        if (!$result) {
+            die('Query' . FAIL . mysqli_error($connection));
+            }
     
     }
 
     function search() {
 
-        if(isset($_POST['submit'])) {
-
             global $connection;
+            global $result;
             $search = $_POST['search'];
             $query = "SELECT * FROM `post` WHERE `post_tags` LIKE '%$search%' ";
-            $result = mysqli_query($connection, $query);
-
-                if (!$result) {
-                     die('query failed ' . mysqli_error($connection));
-                    } 
-            }        
-             echo"<div class='well'>
-                    <h4>Blog Search</h4>
-                    <form action='search.php' method='post'>
-                    <div class='input-group'>
-                        <input name='search' type='text' class='form-control'>
-                        <span class='input-group-btn'>
-                            <button name='submit' class='btn btn-default' type='submit'>
-                                <span class='glyphicon glyphicon-search'></span>
-                        </button>
-                        </span>
-                    </div>
-                    </form>
-                    <!-- /.input-group -->
-                </div>";
-        
+            $result = mysqli_query($connection, $query);  
+            
+            if (!$result) {
+                die('Query' . FAIL . mysqli_error($connection));
+                }                         
     } 
+
+    function insertCategories(){
+
+        global $connection;
+        global $result;
+        $cat_title =$_POST['cat_title'];
+
+        // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+        // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+        $cat_title = mysqli_real_escape_string($connection, $cat_title);
+
+        $query = "INSERT INTO `categories` (`cat_title`) ";
+        $query .= "VALUES('{$cat_title}')";
+        $result = mysqli_query($connection, $query);
+        
+        if (!$result) {
+            die('Query' . FAIL . mysqli_error($connection));
+        } else {
+            echo SUCESS . "a new categorie added with";
+        }
+}   
+
+    function deleteCategories() {
+
+        global $connection;
+        global $result;
+        $cat_id =$_GET['delete'];
+
+        $query = "DELETE FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
+        $result = mysqli_query($connection, $query);
+        
+        if (!$result) {
+            die('Query' . FAIL . mysqli_error($connection));
+        } else {
+            header("Location: categories.php");
+        }
+
+    }
+
+    function updateCategories(){
+
+        global $connection;
+        global $result;
+        $cat_id =$_GET['cat_id'];
+
+        // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+        // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+        $cat_title = mysqli_real_escape_string($connection, $cat_title);
+
+        $query = "INSERT INTO `categories` (`cat_title`) ";
+        $query .= "VALUES('{$cat_title}')";
+        $result = mysqli_query($connection, $query);
+        
+        if (!$result) {
+            die('Query' . FAIL . mysqli_error($connection));
+        } else {
+            echo SUCESS . "a new categorie added with";
+        }
+}
