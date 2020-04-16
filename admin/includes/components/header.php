@@ -1,3 +1,13 @@
+<?php 
+    /* This function will turn output buffering on. 
+    While output buffering is active no output is sent from the script (other than headers), 
+    instead the output is stored in an internal buffer.
+    The contents of this internal buffer may be copied into a string variable using ob_get_contents(). 
+    To output what is stored in the internal buffer, use ob_end_flush(). Alternatively, ob_end_clean() 
+    will silently discard the buffer contents.*/
+    ob_start();
+?> 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
