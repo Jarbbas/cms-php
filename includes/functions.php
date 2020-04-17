@@ -119,7 +119,10 @@
 
         $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
         $result = mysqli_query($connection, $query);
-       
+
+        if (!$result) {
+            die('Query' . FAIL . mysqli_error($connection));
+            }      
     }
 
     function updateCategories(){

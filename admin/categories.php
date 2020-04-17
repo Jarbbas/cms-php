@@ -1,29 +1,10 @@
     <?php
-    //root pathsand DB
-    $path_to_db = $_SERVER['DOCUMENT_ROOT'];
-    $path_to_db .= "/projeto-cms-php/includes/db.php";
-    $path_to_functions = $_SERVER['DOCUMENT_ROOT'];
-    $path_to_functions .= "/projeto-cms-php/includes/functions.php";
-    $path_to_messages = $_SERVER['DOCUMENT_ROOT'];
-    $path_to_messages .= "/projeto-cms-php/includes/messages.php";
-
-
+     //header component
     $path_to_header_admin = $_SERVER['DOCUMENT_ROOT'];
     $path_to_header_admin .= "/projeto-cms-php/admin/includes/components/header.php";
-    $path_to_navigation_admin = $_SERVER['DOCUMENT_ROOT'];
-    $path_to_navigation_admin .= "/projeto-cms-php/admin/includes/components/navigation.php";
-    $path_to_footer_admin = $_SERVER['DOCUMENT_ROOT'];
-    $path_to_footer_admin .= "/projeto-cms-php/admin/includes/components/footer.php";
-
-    include_once($path_to_db);
-    include_once($path_to_functions);
-    include_once($path_to_messages);
-
-    //header component
     include_once($path_to_header_admin);
-
-
     ?>
+    
     <div id="wrapper">
 
     <!-- Navigation -->
@@ -95,9 +76,6 @@
     queryCountCategories(); //outputs $count so we can list all the categories from MYSQL
     queryAllCategories($count); 
 
-    if (!$result) {
-    die('query failed ' . mysqli_error($connection));
-    } else {      
     while ($row = mysqli_fetch_assoc($result)) {                            
     $cat_title = $row['cat_title']; 
     $cat_id = $row['cat_id'];
@@ -108,7 +86,7 @@
     <td><a href='categories.php?delete={$cat_id}'>Delete</a></td>
     </tr>";
     } 
-    }                                           
+                                               
     ?> 
 
     </tbody>
@@ -129,9 +107,7 @@
 
     <?php
 
-    if (!$result) {
-    die('Query' . FAIL . mysqli_error($connection));
-    } else {
+
     while ($row = mysqli_fetch_assoc($result)) {                            
     $cat_title = $row['cat_title'];              
 
@@ -144,9 +120,10 @@
     </div>
     </form>
     <?php 
+
     } 
-    }
-    } 
+  }
+
     ?>
     <!-- /.col-lg-12 -->
      </div> 

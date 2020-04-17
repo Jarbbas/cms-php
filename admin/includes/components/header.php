@@ -1,4 +1,21 @@
 <?php 
+
+//root pathsand DB
+$path_to_db = $_SERVER['DOCUMENT_ROOT'];
+$path_to_db .= "/projeto-cms-php/includes/db.php";
+$path_to_functions = $_SERVER['DOCUMENT_ROOT'];
+$path_to_functions .= "/projeto-cms-php/includes/functions.php";
+$path_to_messages = $_SERVER['DOCUMENT_ROOT'];
+$path_to_messages .= "/projeto-cms-php/includes/messages.php";
+$path_to_navigation_admin = $_SERVER['DOCUMENT_ROOT'];
+$path_to_navigation_admin .= "/projeto-cms-php/admin/includes/components/navigation.php";
+$path_to_footer_admin = $_SERVER['DOCUMENT_ROOT'];
+$path_to_footer_admin .= "/projeto-cms-php/admin/includes/components/footer.php";
+
+include_once($path_to_db);
+include_once($path_to_functions);
+include_once($path_to_messages);
+
     /* This function will turn output buffering on. 
     While output buffering is active no output is sent from the script (other than headers), 
     instead the output is stored in an internal buffer.
