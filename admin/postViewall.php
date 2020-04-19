@@ -1,7 +1,7 @@
     <?php
      //header component
     $path_to_header_admin = $_SERVER['DOCUMENT_ROOT'];
-    $path_to_header_admin .= "/projeto-cms-php/admin/includes/components/header.php";
+    $path_to_header_admin .= "/cms-php/admin/includes/components/header.php";
     include_once($path_to_header_admin);
     ?>
     
