@@ -2,15 +2,15 @@
 
 //root pathsand DB
 $path_to_db = $_SERVER['DOCUMENT_ROOT'];
-$path_to_db .= "/projeto-cms-php/includes/db.php";
+$path_to_db .= "/cms-php/includes/db.php";
 $path_to_functions = $_SERVER['DOCUMENT_ROOT'];
-$path_to_functions .= "/projeto-cms-php/includes/functions.php";
+$path_to_functions .= "/cms-php/includes/functions.php";
 $path_to_messages = $_SERVER['DOCUMENT_ROOT'];
-$path_to_messages .= "/projeto-cms-php/includes/messages.php";
+$path_to_messages .= "/cms-php/includes/messages.php";
 $path_to_navigation_admin = $_SERVER['DOCUMENT_ROOT'];
-$path_to_navigation_admin .= "/projeto-cms-php/admin/includes/components/navigation.php";
+$path_to_navigation_admin .= "/cms-php/admin/includes/components/navigation.php";
 $path_to_footer_admin = $_SERVER['DOCUMENT_ROOT'];
-$path_to_footer_admin .= "/projeto-cms-php/admin/includes/components/footer.php";
+$path_to_footer_admin .= "/cms-php/admin/includes/components/footer.php";
 
 include_once($path_to_db);
 include_once($path_to_functions);
