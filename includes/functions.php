@@ -1,5 +1,45 @@
 <?php
 
+
+function insertPost(){
+
+    global $connection;
+    global $result;
+    $post_title = $_POST['post_title'];
+    $post_category_id = $_POST['post_category_id'];
+    $post_author = $_POST['post_author'];
+    $post_status = $_POST['post_status'];
+    $post_tags = $_POST['post_tags'];
+    $post_content = $_POST['post_content'];
+
+    $post_image = $_FILES['post_image']['name'];
+    $post_image_tmp = $_FILES['post_image']['tmp_name'];
+
+    // $post_date = date('d-m-y');
+    $post_comment_count = 1;
+
+    move_uploaded_file($post_image_tmp, "../includes/images/$post_image");
+
+    // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+    // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+    $post_title = mysqli_real_escape_string($connection, $post_title);
+    $post_tags = mysqli_real_escape_string($connection, $post_tags);
+    $post_author = mysqli_real_escape_string($connection, $post_author);
+    $post_status = mysqli_real_escape_string($connection, $post_status);
+    $post_content = mysqli_real_escape_string($connection, $post_content);
+
+    $query = "INSERT INTO `post` (`post_category_id`, `post_title`, `post_author`, `post_date`, `post_image`, `post_content`, `post_tags`, `post_comment_count`, `post_status`) ";
+    $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}')";
+    $result = mysqli_query($connection, $query);
+    
+    if (!$result) {
+        die('Query' . FAIL . mysqli_error($connection));
+    } else {
+        echo SUCESS . "a new Post is added";
+    }
+}
+
+
     function queryCountCategories() {
 
         global $connection;

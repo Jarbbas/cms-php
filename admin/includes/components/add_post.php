@@ -2,20 +2,7 @@
 
 if (isset($_POST['create_post'])) {
     
-            $post_title = $_POST['post_title'];
-            $post_category_id = $_POST['post_category_id'];
-            $post_author = $_POST['post_author'];
-            $post_status = $_POST['post_status'];
-            $post_tags = $_POST['post_tags'];
-            $post_content = $_POST['post_content'];
-
-            $post_image = $_FILES['post_image']['name'];
-            $post_image_tmp = $_FILES['git']['tmp_name'];
-
-            $post_date = date('d-m-y');
-            $post_comment_count = 1;
-
-            move_uploaded_file($post_image_tmp, "../includes/images/$post_image");
+    insertPost();
 }
 
 ?>

@@ -1,7 +1,6 @@
 <?php  
    //root paths to components and DB
    $path_to_functions = $_SERVER['DOCUMENT_ROOT'];
-<<<<<<< ours
    $path_to_functions .= "/cms-php/includes/functions.php";
    $path_to_db = $_SERVER['DOCUMENT_ROOT'];
    $path_to_db .= "/cms-php/includes/db.php";
@@ -15,21 +14,6 @@
    $path_to_sidebar .= "/cms-php/includes/components/sidebar.php";
    $path_to_footer = $_SERVER['DOCUMENT_ROOT'];
    $path_to_footer .= "/cms-php/includes/components/footer.php";
-=======
-   $path_to_functions .= "/cms-phps/functions.php";
-   $path_to_db = $_SERVER['DOCUMENT_ROOT'];
-   $path_to_db .= "/cms-phps/includes/db.php";
-   $path_to_messages = $_SERVER['DOCUMENT_ROOT'];
-   $path_to_messages .= "/cms-phps/includes/messages.php";
-   $path_to_header = $_SERVER['DOCUMENT_ROOT'];
-   $path_to_header .= "/cms-phps/includes/components/header.php";
-   $path_to_navigation = $_SERVER['DOCUMENT_ROOT'];
-   $path_to_navigation .= "/cms-phps/includes/components/navigation.php";
-   $path_to_sidebar = $_SERVER['DOCUMENT_ROOT'];
-   $path_to_sidebar .= "/cms-phps/includes/components/sidebar.php";
-   $path_to_footer = $_SERVER['DOCUMENT_ROOT'];
-   $path_to_footer .= "/cms-phps/includes/components/footer.php";
->>>>>>> theirs
 
    include_once($path_to_db);
    include_once($path_to_functions);
