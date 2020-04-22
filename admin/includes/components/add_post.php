@@ -10,7 +10,7 @@ if (isset($_POST['create_post'])) {
             $post_content = $_POST['post_content'];
 
             $post_image = $_FILES['post_image']['name'];
-            $post_image_tmp = $_FILES['post_image']['tmp_name'];
+            $post_image_tmp = $_FILES['git']['tmp_name'];
 
             $post_date = date('d-m-y');
             $post_comment_count = 1;
