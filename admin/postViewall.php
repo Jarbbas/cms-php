@@ -50,8 +50,9 @@ if (isset($_GET['source'])) {
 }
 
     switch ($source) {
-        case '404':
-            echo "PAGE NOT FOUND";
+
+        case 'add':
+            include "includes/components/add_post.php";
             break;
         
         default:
