@@ -1,4 +1,6 @@
-<?php queyAllPosts(); 
+<?php 
+
+queyAllPosts(); 
 
 while ($row = mysqli_fetch_assoc($result)) { 
         $post_id = $row['post_id'];                       
@@ -21,15 +23,17 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td>{$post_tags}</td>
     <td>{$post_comment_count}</td>
     <td>{$post_date}</td>
-    <td><a href='view_all_posts.php?deletePost?={$post_id}'>Delete</a></td>
+    <td><a href='posts.php?source=edit&post_id={$post_id}'>Edit</a></td>
+    <td><a href='posts.php?deletePost={$post_id}'>Delete</a></td> 
     </tr>";
 
-
-    if(isset($_GET['deletePost'])) {
-
-        $post_id = $_GET['deletePost'];
-        deletePost( $post_id);
-    }
 } 
+
+
+if(isset($_GET['deletePost'])) {
+
+    $post_id = $_GET['deletePost'];
+    deletePost();
+}
 
 

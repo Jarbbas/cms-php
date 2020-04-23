@@ -54,12 +54,15 @@ if (isset($_GET['source'])) {
         case 'add':
             include "includes/components/add_post.php";
             break;
-        
+
+        case 'edit':
+            include "includes/components/edit_post.php";
+            break;    
+
         default:
            include "includes/components/view_all_posts.php";
             break;
     }
-
 
 ?>
             

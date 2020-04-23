@@ -9,7 +9,7 @@ function search() {
     global $connection;
     global $result;
     $search = $_POST['search'];
-    $query = "SELECT * FROM `post` WHERE `post_tags` LIKE '%$search%' ";
+    $query = "SELECT * FROM `posts` WHERE `post_tags` LIKE '%$search%' ";
     $result = mysqli_query($connection, $query);  
     
     if (!$result) {
@@ -21,7 +21,7 @@ function search() {
 
     global $connection;
     global $result;
-    $query = "SELECT * FROM `post`";
+    $query = "SELECT * FROM `posts`";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
@@ -38,9 +38,25 @@ function search() {
 
         $search = $_POST['search'];
 
-        $query = "SELECT * FROM `post` WHERE `post_tags` LIKE '%$search%' ";
+        $query = "SELECT * FROM `posts` WHERE `post_tags` LIKE '%$search%' ";
         $result = mysqli_query($connection, $query);
         $count = mysqli_num_rows($result);
+
+        if (!$result) {
+            die('Query' . FAIL . mysqli_error($connection));
+            }
+    
+    }
+
+    function searchPostById() {
+
+        global $connection;
+        global $result;
+        $post_id = $_GET['post_id'];
+
+        $query = "SELECT * FROM `posts` WHERE `post_id` = $post_id ";
+        $result = mysqli_query($connection, $query);
+       
 
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
@@ -75,7 +91,7 @@ function insertPost(){
     $post_status = mysqli_real_escape_string($connection, $post_status);
     $post_content = mysqli_real_escape_string($connection, $post_content);
 
-    $query = "INSERT INTO `post` (`post_category_id`, `post_title`, `post_author`, `post_date`, `post_image`, `post_content`, `post_tags`, `post_comment_count`, `post_status`) ";
+    $query = "INSERT INTO `posts` (`post_category_id`, `post_title`, `post_author`, `post_date`, `post_image`, `post_content`, `post_tags`, `post_comment_count`, `post_status`) ";
     $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', now(), '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_comment_count}', '{$post_status}')";
     $result = mysqli_query($connection, $query);
     
@@ -90,15 +106,15 @@ function deletePost() {
 
     global $connection;
     global $result;
-    $cat_id =$_GET['delete'];
+    $post_id =$_GET['deletePost'];
 
-    $query = "DELETE FROM `posts` WHERE `cat_id` = '{$cat_id}' ";
+    $query = "DELETE FROM `posts` WHERE `post_id` = '{$post_id}' ";
     $result = mysqli_query($connection, $query);
     
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
-        header("Location: categories.php");
+        header("Location: posts.php");
     }
 
 }
