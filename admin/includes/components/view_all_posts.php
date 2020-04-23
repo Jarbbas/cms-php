@@ -25,11 +25,10 @@ while ($row = mysqli_fetch_assoc($result)) {
     </tr>";
 
 
-    if(isset($_GET['deletePost'])) 
+    if(isset($_GET['deletePost'])) {
 
         $post_id = $_GET['deletePost'];
-
-        deletePost();
+        deletePost( $post_id);
     }
 } 
 
