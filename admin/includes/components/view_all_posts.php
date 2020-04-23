@@ -21,5 +21,16 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td>{$post_tags}</td>
     <td>{$post_comment_count}</td>
     <td>{$post_date}</td>
+    <td><a href='view_all_posts.php?deletePost?={$post_id}'>Delete</a></td>
     </tr>";
-    } 
+
+
+    if(isset($_GET['deletePost'])) 
+
+        $post_id = $_GET['deletePost'];
+
+        deletePost();
+    }
+} 
+
+
