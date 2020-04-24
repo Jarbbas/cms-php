@@ -221,12 +221,17 @@ function deletePost() {
 
     }
 
-    function selectCategories(){
+    function selectCategories($post_category_id){
 
         global $connection;
         global $result;
-        $cat_id =$_GET['update'];
 
+        if(empty($post_category_id)) {
+            $cat_id =$_GET['update'];
+        } else {
+            $cat_id = $post_category_id;
+        }
+        
         $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
         $result = mysqli_query($connection, $query);
 

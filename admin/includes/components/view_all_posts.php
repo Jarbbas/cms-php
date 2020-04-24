@@ -3,6 +3,7 @@
 queyAllPosts(); 
 
 while ($row = mysqli_fetch_assoc($result)) { 
+    
         $post_id = $row['post_id'];                       
         $post_author = $row['post_author'];
         $post_title = $row['post_title'];
@@ -13,11 +14,16 @@ while ($row = mysqli_fetch_assoc($result)) {
         $post_comment_count = $row['post_comment_count'];
         $post_date = $row['post_date'];              
 
+        selectCategories($post_category_id);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $category_name = $row['cat_title'];
+        }
+        
     echo "<tr>
     <td>{$post_id}</td>
     <td>{$post_author}</td>
     <td>{$post_title}</td>
-    <td>{$post_category_id}</td>
+    <td>{$category_name}</td>
     <td>{$post_status}</td>
     <td><img width='100' src='../includes/images/{$post_image}'</img></td>
     <td>{$post_tags}</td>
