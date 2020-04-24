@@ -2,7 +2,8 @@
 
 if (isset($_POST['edit_post'])) {
     
-    editPost();
+    updatePost();
+    
 }
 
 searchPostById();
@@ -26,11 +27,12 @@ while ($row = mysqli_fetch_assoc($result)) {
             <input type="text" class="form-control" name="post_title" value ="<?php echo $post_title; ?>">
         </div>
         <div class="form-group">
-            <select name="" id="">
+        <select name="post_category" id="">
 <?php
     queryCountCategories();
     queryAllCategories($count);
 
+    //this will fetch categories ids and names
     while ($row = mysqli_fetch_assoc($result)) {                            
         $cat_title = $row['cat_title']; 
         $cat_id = $row['cat_id'];
@@ -39,7 +41,7 @@ while ($row = mysqli_fetch_assoc($result)) {
        
         } 
 ?>
-</select>
+        </select>
         </div>
         <div class="form-group">
             <label for="post_author">Post Author</label>
@@ -51,6 +53,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
         <div class="form-group">
             <img width="100" src="../includes/images/<?php echo $post_image;?>" alt="">
+            <input type="file"  name="post_image">
         </div>
         <div class="form-group">
             <label for="post_tags">Post Tags</label>
@@ -62,7 +65,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
 
         <div class="form-group">
-            <input class="btn btn-primary" type="submit" name="edit_post" value="Edit Post">
+            <input class="btn btn-primary" type="submit" name="edit_post" value="Update Post">
         </div>
 
 </form>
