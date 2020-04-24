@@ -15,7 +15,8 @@ while ($row = mysqli_fetch_assoc($result)) {
         $post_date = $row['post_date'];              
 
         selectCategories($post_category_id);
-        while ($row = mysqli_fetch_assoc($result)) {
+
+        while ($row = mysqli_fetch_assoc($resultselectCategories)) {
             $category_name = $row['cat_title'];
         }
         

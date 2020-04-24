@@ -15,7 +15,21 @@ if (isset($_POST['create_post'])) {
         </div>
         <div class="form-group">
             <label for="post_category_id">Post Category Id</label>
-            <input type="text" class="form-control" name="post_category_id">
+            <select class="form-control" name="post_category_id" id="">
+<?php
+    queryCountCategories();
+    queryAllCategories($count);
+
+    //this will fetch categories ids and names
+    while ($row = mysqli_fetch_assoc($result)) {                            
+        $cat_title = $row['cat_title']; 
+        $cat_id = $row['cat_id'];
+        
+        echo "<option value='{$cat_id}'>{$cat_title}</option>";
+       
+        } 
+?>
+        </select>
         </div>
         <div class="form-group">
             <label for="post_author">Post Author</label>

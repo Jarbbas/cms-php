@@ -21,7 +21,7 @@ function search() {
 
     global $connection;
     global $result;
-    $query = "SELECT * FROM `posts`";
+    $query = "SELECT * FROM `posts` ";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
@@ -224,7 +224,7 @@ function deletePost() {
     function selectCategories($post_category_id){
 
         global $connection;
-        global $result;
+        global $resultselectCategories;
 
         if(empty($post_category_id)) {
             $cat_id =$_GET['update'];
@@ -233,9 +233,9 @@ function deletePost() {
         }
         
         $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
-        $result = mysqli_query($connection, $query);
+        $resultselectCategories = mysqli_query($connection, $query);
 
-        if (!$result) {
+        if (!$resultselectCategories) {
             die('Query' . FAIL . mysqli_error($connection));
             }      
     }

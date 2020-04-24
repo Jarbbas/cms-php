@@ -27,7 +27,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <input type="text" class="form-control" name="post_title" value ="<?php echo $post_title; ?>">
         </div>
         <div class="form-group">
-        <select name="post_category" id="">
+        <select class="form-control" name="post_category" id="">
 <?php
     queryCountCategories();
     queryAllCategories($count);
