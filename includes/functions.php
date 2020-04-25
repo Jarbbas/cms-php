@@ -30,7 +30,7 @@ function search() {
    
     }
 
-    function queySearchPosts() {
+    function querySearchPosts() {
 
         global $connection;
         global $result;
@@ -42,6 +42,22 @@ function search() {
         $result = mysqli_query($connection, $query);
         $count = mysqli_num_rows($result);
 
+        if (!$result) {
+            die('Query' . FAIL . mysqli_error($connection));
+            }
+    
+    }
+
+    function queryPostsByCategory() {
+
+        global $connection;
+        global $result;
+        
+        $cat_id = $_GET['cat_id'];
+
+        $query = "SELECT * FROM `posts` WHERE `post_category_id` = '{$cat_id}' ";
+        $result = mysqli_query($connection, $query);
+        
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
             }
