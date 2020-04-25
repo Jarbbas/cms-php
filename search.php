@@ -36,7 +36,7 @@
 
             <?php 
             
-            queySearchPosts();
+            querySearchPosts();
 
             if($count < 1) {
                 echo "<h1 class='page-header'>" . NOTOFUND . "</h1>";
