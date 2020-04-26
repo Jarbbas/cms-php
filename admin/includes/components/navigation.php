@@ -13,8 +13,6 @@
             <ul class="nav navbar-right top-nav">
             <li><a href="../index.php">Home Page</a></li>
 
-
-
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -40,7 +38,7 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i class="fa fa-fw fa-arrows-v"></i> Posts<i class="fa fa-fw fa-caret-down"></i></a>
                         <ul id="posts_dropdown" class="collapse">
                             <li>
-                                <a href="posts.php">View All Posts</a>
+                                <a href="posts.php?source=view">View All Posts</a>
                             </li>
                             <li>
                                 <a href="posts.php?source=add">Add new Post</a>

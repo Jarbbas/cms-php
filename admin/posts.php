@@ -4,14 +4,14 @@
     $path_to_header_admin .= "/cms-php/admin/includes/components/header.php";
     include_once($path_to_header_admin);
     ?>
-    
+
     <div id="wrapper">
 
     <!-- Navigation -->
 
     <?php  include_once($path_to_navigation_admin); ?>
 
-    <div id="page-wrapper"> 
+    <div id="page-wrapper">
     <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -23,27 +23,13 @@
     View all Post Page
     <small>Author</small>
     </h1>
-        
-         <table class="table table-bordered table-hover">    
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Author</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Status</th>
-                    <th>Image</th>
-                    <th>Tags</th>
-                    <th>Comments</th>
-                    <th>Date</th>
-                </tr>
-            </thead>  
-            <tbody>
 
-<?php 
+
+
+<?php
 
 if (isset($_GET['source'])) {
-    
+
     $source = $_GET['source'];
 } else {
     $source = "";
@@ -57,17 +43,18 @@ if (isset($_GET['source'])) {
 
         case 'edit':
             include "includes/components/edit_post.php";
-            break;    
+            break;
+
+        case 'view':
+            include "includes/components/view_all_posts.php";
+            break;
 
         default:
-           include "includes/components/view_all_posts.php";
             break;
     }
 
 ?>
-            
-            </tbody>
-        </table>
+
     </div>
     <!-- /#page-wrapper -->
 
