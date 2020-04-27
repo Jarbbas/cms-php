@@ -1,8 +1,8 @@
-<?php 
+<?php
 
     $path_to_header = $_SERVER['DOCUMENT_ROOT'];
     $path_to_header .= "/cms-php/includes/components/header.php";
- 
+
     // <!-- Header component -->
     include_once($path_to_header);
 
@@ -19,20 +19,20 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-            <?php         
+            <?php
 
-            searchPostById(); 
+            searchPostById();
 
             if (!$result) {
                 die('query failed ' . mysqli_error($connection));
-                } else {      
-                        while ($row = mysqli_fetch_assoc($result)) {                            
-                        $post_title = $row['post_title'];              
-                        $post_author = $row['post_author'];              
-                        $post_date = $row['post_date'];              
-                        $post_image = $row['post_image'];              
-                        $post_content = $row['post_content'];              
-            
+                } else {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                        $post_title = $row['post_title'];
+                        $post_author = $row['post_author'];
+                        $post_date = $row['post_date'];
+                        $post_image = $row['post_image'];
+                        $post_content = $row['post_content'];
+
                         echo " <h1 class='page-header'>
                                 Page Heading
                                 <small>Secondary Text</small>
@@ -49,19 +49,38 @@
                                 <p>{$post_content}</p>
                                 <a class='btn btn-primary' href='#'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a>
                                 <hr>";
-                            } 
+                            }
                         }
             ?>
  <!-- Blog Comments -->
+<?php
+
+    if(isset($_POST['create_comment'])) {
+      createComment();
+    }
+
+ ?>
 
                 <!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
-                    <form role="form">
+                    <form action="" method="post" role="form">
+
+                      <div class="form-group">
+                          <label for="author">Author</label>
+                          <input type="text" class="form-control" name="comment_author" value="">
+                      </div>
+
+                      <div class="form-group">
+                          <label for="email">Email</label>
+                          <input type="text" class="form-control" name="comment_email" value="">
+                      </div>
+
                         <div class="form-group">
-                            <textarea class="form-control" rows="3"></textarea>
+                            <label for="comment">Comment</label>
+                            <textarea name="comment_content" class="form-control" rows="3"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" name="create_comment" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
 
@@ -120,6 +139,6 @@
         <hr>
 
         <!-- Footer component-->
-<?php  
-    include_once($path_to_footer); 
+<?php
+    include_once($path_to_footer);
 ?>

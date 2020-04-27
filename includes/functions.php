@@ -10,12 +10,12 @@ function search() {
     global $result;
     $search = $_POST['search'];
     $query = "SELECT * FROM `posts` WHERE `post_tags` LIKE '%$search%' ";
-    $result = mysqli_query($connection, $query);  
-    
+    $result = mysqli_query($connection, $query);
+
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
-        }                         
-} 
+        }
+}
 
   function queyAllPosts() {
 
@@ -27,7 +27,7 @@ function search() {
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
         }
-   
+
     }
 
     function querySearchPosts() {
@@ -45,23 +45,23 @@ function search() {
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
             }
-    
+
     }
 
     function queryPostsByCategory() {
 
         global $connection;
         global $result;
-        
+
         $cat_id = $_GET['cat_id'];
 
         $query = "SELECT * FROM `posts` WHERE `post_category_id` = '{$cat_id}' ";
         $result = mysqli_query($connection, $query);
-        
+
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
             }
-    
+
     }
 
     function searchPostById() {
@@ -72,12 +72,12 @@ function search() {
 
         $query = "SELECT * FROM `posts` WHERE `post_id` = $post_id ";
         $result = mysqli_query($connection, $query);
-       
+
 
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
             }
-    
+
     }
 
 //CRUD FUNCTIONS FOR POST
@@ -126,7 +126,7 @@ function insertPost(){
     $query .= "'{$post_comment_count}', ";
     $query .= "'{$post_status}')";
     $result = mysqli_query($connection, $query);
-    
+
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
@@ -152,10 +152,10 @@ function updatePost(){
 
     move_uploaded_file($post_image_tmp, "../includes/images/$post_image");
 
-        if(empty($post_image)) { 
+        if(empty($post_image)) {
         $query = "SELECT * FROM `posts` WHERE `post_id` = '{$post_id}' ";
         $result = mysqli_query($connection, $query);
-        while ($row = mysqli_fetch_assoc($result)) { 
+        while ($row = mysqli_fetch_assoc($result)) {
                 $post_image = $row['post_image'];
         }
     }
@@ -179,7 +179,7 @@ function updatePost(){
     $query .= "`post_status` = 'Updated' ";
     $query .= "WHERE `post_id` = '{$post_id}' ";
     $result = mysqli_query($connection, $query);
-    
+
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
@@ -195,7 +195,7 @@ function deletePost() {
 
     $query = "DELETE FROM `posts` WHERE `post_id` = '{$post_id}' ";
     $result = mysqli_query($connection, $query);
-    
+
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
@@ -247,17 +247,18 @@ function deletePost() {
         } else {
             $cat_id = $post_category_id;
         }
-        
+
         $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
         $resultselectCategories = mysqli_query($connection, $query);
 
         if (!$resultselectCategories) {
             die('Query' . FAIL . mysqli_error($connection));
-            }      
+            }
     }
 
-
-    // CRUD FUNCTIONS FOR CATEGORIES
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////CRUD FUNCTIONS FOR CATEGORIES /////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     function insertCategories(){
 
@@ -272,23 +273,23 @@ function deletePost() {
         $query = "INSERT INTO `categories` (`cat_title`) ";
         $query .= "VALUES('{$cat_title}')";
         $result = mysqli_query($connection, $query);
-        
+
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
         } else {
             echo SUCESS . "a new categorie added";
         }
-}   
+}
 
     function deleteCategories() {
 
         global $connection;
         global $result;
-        $cat_id =$_GET['delete'];
+        $cat_id = $_GET['delete'];
 
         $query = "DELETE FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
         $result = mysqli_query($connection, $query);
-        
+
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
         } else {
@@ -311,10 +312,88 @@ function deletePost() {
         $query = "UPDATE `categories` SET `cat_title` = '{$cat_title}' ";
         $query .= "WHERE `cat_id` = '{$cat_id}'";
         $result = mysqli_query($connection, $query);
-        
+
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
         } else {
             header("Location: categories.php");
         }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////COMMENTS FUNCTIONS ///////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+function queyAllComments() {
+
+  global $connection;
+  global $result;
+  $query = "SELECT * FROM `comments` ";
+  $result = mysqli_query($connection, $query);
+
+  if (!$result) {
+      die('Query' . FAIL . mysqli_error($connection));
+      }
+
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////CRUD FUNCTIONS FOR COMMENTS //////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  function createComment(){
+
+      global $connection;
+      global $result;
+
+      $comment_post_id  = $_GET['post_id'];
+      $comment_author = $_POST['comment_author'];
+      $comment_email = $_POST['comment_email'];
+      $comment_content = $_POST['comment_content'];
+      $comment_status = "unapproved";
+
+      // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+      // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+      $comment_author = mysqli_real_escape_string($connection, $comment_author);
+      $comment_email = mysqli_real_escape_string($connection, $comment_email);
+      $comment_content = mysqli_real_escape_string($connection, $comment_content);
+      $comment_status = mysqli_real_escape_string($connection, $comment_status);
+
+      $query = "INSERT INTO `comments` ";
+      $query .= "(`comment_post_id`, ";
+      $query .= "`comment_author`, ";
+      $query .= "`comment_email`, ";
+      $query .= "`comment_content`, ";
+      $query .= "`comment_status`, ";
+      $query .= "`comment_date`) ";
+      $query .= "VALUES('{$comment_post_id}', ";
+      $query .= "'{$comment_author}', ";
+      $query .= "'{$comment_email}', ";
+      $query .= "'{$comment_content}', ";
+      $query .= "'{$comment_status}', ";
+      $query .= "now() )";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          echo SUCESS . "you Comment this post";
+      }
+  }
+
+  function deleteComment(){
+
+      global $connection;
+      global $result;
+      $comment_id = $_GET['delete'];
+
+      $query = "DELETE FROM `comments` WHERE `comment_id` = '{$comment_id}' ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          header("Location: comments.php");
+      }
+
+  }

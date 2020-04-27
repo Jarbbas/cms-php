@@ -1,8 +1,8 @@
-<?php 
+<?php
 
     $path_to_header = $_SERVER['DOCUMENT_ROOT'];
     $path_to_header .= "/cms-php/includes/components/header.php";
- 
+
     // <!-- Header component -->
     include_once($path_to_header);
 
@@ -19,21 +19,21 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-            <?php         
+            <?php
 
-            queyAllPosts(); 
+            queyAllPosts();
 
             if (!$result) {
                 die('query failed ' . mysqli_error($connection));
-                } else {      
+                } else {
                         while ($row = mysqli_fetch_assoc($result)) {
-                        $post_id = $row['post_id'];                            
-                        $post_title = $row['post_title'];              
-                        $post_author = $row['post_author'];              
-                        $post_date = $row['post_date'];              
-                        $post_image = $row['post_image'];              
-                        $post_content = substr($row['post_content'],0, 150);             
-            
+                        $post_id = $row['post_id'];
+                        $post_title = $row['post_title'];
+                        $post_author = $row['post_author'];
+                        $post_date = $row['post_date'];
+                        $post_image = $row['post_image'];
+                        $post_content = substr($row['post_content'],0, 150);
+
                         echo " <h1 class='page-header'>
                                 Page Heading
                                 <small>Secondary Text</small>
@@ -50,9 +50,9 @@
                                     </a>
                                 <hr>
                                 <p>{$post_content}</p>
-                                <a class='btn btn-primary' href='#'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a>
+                                <a class='btn btn-primary' href='post.php?post_id={$post_id}'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a>
                                 <hr>";
-                            } 
+                            }
                         }
             ?>
 
@@ -69,6 +69,6 @@
         <hr>
 
         <!-- Footer component-->
-<?php  
-    include_once($path_to_footer); 
+<?php
+    include_once($path_to_footer);
 ?>
