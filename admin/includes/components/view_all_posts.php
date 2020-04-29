@@ -30,34 +30,39 @@ while ($row = mysqli_fetch_assoc($result)) {
         $post_comment_count = $row['post_comment_count'];
         $post_date = $row['post_date'];
 
-        selectCategories($post_category_id);
-
-        while ($row = mysqli_fetch_assoc($resultselectCategories)) {
-            $category_name = $row['cat_title'];
-        }
-
     echo "<tr>
     <td>{$post_id}</td>
     <td>{$post_author}</td>
-    <td>{$post_title}</td>
-    <td>{$category_name}</td>
+    <td>{$post_title}</td>";
+
+    $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$post_category_id}' ";
+    $resultCatName= mysqli_query($connection, $query);
+    while ($row = mysqli_fetch_assoc($resultCatName)) {
+        $category_name = $row['cat_title'];
+    }
+    if (!$resultCatName) {
+        die('Query' . FAIL . mysqli_error($connection));
+        }
+
+    echo"<td>{$category_name}</td>
     <td>{$post_status}</td>
     <td><img width='100' src='../includes/images/{$post_image}'</img></td>
     <td>{$post_tags}</td>
     <td>{$post_comment_count}</td>
     <td>{$post_date}</td>
     <td><a href='posts.php?source=edit&post_id={$post_id}'>Edit</a></td>
-    <td><a href='posts.php?deletePost={$post_id}'>Delete</a></td>
+    <td><a href='posts.php?delete={$post_id}'>Delete</a></td>
     </tr>";
 
+
 }
 
+if(isset($_GET['delete'])) {
 
-if(isset($_GET['deletePost'])) {
+  deletePost();
 
-    $post_id = $_GET['deletePost'];
-    deletePost();
 }
+
 ?>
 </tbody>
 </table>

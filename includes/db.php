@@ -1,9 +1,9 @@
     <?php
 
-   //Frist we create an array with the connection values  
+   //Frist we create an array with the connection values
     $db['db_host'] = "localhost";
     $db['db_user'] = "root";
-    $db['db_pass'] = "";
+    $db['db_pass'] = "xela";
     $db['db_name'] = "cms";
 
     /**
@@ -18,6 +18,6 @@
     //$connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
     $connection = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
-    //Conection Validation 
+    //Conection Validation
     //$connection_result = ($connection) ? "Connection".SUCESS : "Conection".FAIL;
     //echo $connection_result;

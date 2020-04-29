@@ -15,12 +15,6 @@
 <?php
 queyAllComments();
 
-
-if(isset($_GET['delete'])) {
-
-    deleteComment();
-}
-
 while ($row = mysqli_fetch_assoc($result)) {
 
         $comment_id = $row['comment_id'];
@@ -45,13 +39,17 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td>{$comment_email}</td>
     <td>{$comment_status}</td>
     <td><a href='../post.php?post_id={$comment_post_id}'>{$post_title}</a></td>
-    <td><a href='posts.php?source=edit&post_id={$comment_id}'>Approve</a></td>
-    <td><a href='posts.php?source=edit&post_id={$comment_id}'>Unapprove</a></td>
+    <td><a href='comments.php?source=edit&post_id={$comment_id}'>Approve</a></td>
+    <td><a href='comments.php?source=edit&post_id={$comment_id}'>Unapprove</a></td>
     <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
     </tr>";
 
 }
 
+if(isset($_GET['delete'])) {
+
+    deleteComment();
+}
 ?>
 </tbody>
 </table>

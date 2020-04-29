@@ -191,7 +191,8 @@ function deletePost() {
 
     global $connection;
     global $result;
-    $post_id =$_GET['deletePost'];
+
+    $post_id =$_GET['delete'];
 
     $query = "DELETE FROM `posts` WHERE `post_id` = '{$post_id}' ";
     $result = mysqli_query($connection, $query);
@@ -227,6 +228,7 @@ function deletePost() {
 
     global $connection;
     global $result;
+
     $cat_limit = (isset($limit)) ? $cat_limit = $limit : $cat_limit = 5;
     $query = "SELECT * FROM `categories` ORDER BY `cat_id` ASC LIMIT $cat_limit ";
     $result = mysqli_query($connection, $query);
@@ -237,23 +239,37 @@ function deletePost() {
 
     }
 
-    function selectCategories($post_category_id){
+    function selectCategories(){
 
         global $connection;
-        global $resultselectCategories;
+        global $result;
 
-        if(empty($post_category_id)) {
-            $cat_id =$_GET['update'];
-        } else {
-            $cat_id = $post_category_id;
-        }
+        $cat_id =$_GET['update'];
 
         $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
-        $resultselectCategories = mysqli_query($connection, $query);
+        $result = mysqli_query($connection, $query);
 
-        if (!$resultselectCategories) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $category_name = $row['cat_title'];
+        }
+        if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
             }
+    }
+
+    function selectCatName($post_category_id){
+
+        global $connection;
+        global $resultCatName;
+
+        $cat_id = $post_category_id;
+
+        $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
+        $resultCatId = mysqli_query($connection, $query);
+
+      if (!$resultCatId) {
+            die('Query' . FAIL . mysqli_error($connection));
+          }
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -385,6 +401,7 @@ function queyAllComments() {
 
       global $connection;
       global $result;
+
       $comment_id = $_GET['delete'];
 
       $query = "DELETE FROM `comments` WHERE `comment_id` = '{$comment_id}' ";

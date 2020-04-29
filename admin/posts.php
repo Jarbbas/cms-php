@@ -50,6 +50,7 @@ if (isset($_GET['source'])) {
             break;
 
         default:
+          include "includes/components/view_all_posts.php";
             break;
     }
 
