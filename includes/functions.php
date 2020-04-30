@@ -17,6 +17,56 @@ function queyAllUsers() {
 
   }
 
+  //CRUD FUNCTIONS FOR POST
+  function insertUser(){
+
+      global $connection;
+      global $result;
+
+      $user_id= $_POST['user_id'];
+      $username = $_POST['username'];
+      $user_password= $_POST['user_password'];
+      $user_fristname = $_POST['user_fristname'];
+      $user_lastname = $_POST['user_lastname'];
+      $user_email = $_POST['user_email'];
+      $user_image = $_POST['user_image'];
+      $user_role = $_POST['user_role'];
+      $userimage = $_FILES['userimage']['name'];
+      $userimage_tmp = $_FILES['userimage']['tmp_name'];
+
+      move_uploaded_file($user_image_tmp, "../includes/images/$user_image");
+
+      // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+      // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+      $username = mysqli_real_escape_string($connection, $username);
+      $user_password = mysqli_real_escape_string($connection, $user_password);
+      $user_fristname = mysqli_real_escape_string($connection, $user_fristname);
+      $user_lastname = mysqli_real_escape_string($connection, $user_lastname);
+      $user_email = mysqli_real_escape_string($connection, $user_email);
+
+      $query = "INSERT INTO `users` ";
+      $query .= "(`username`, ";
+      $query .= "`user_password`, ";
+      $query .= "`user_fristname`, ";
+      $query .= "`user_lastname`, ";
+      $query .= "`user_email`, ";
+      $query .= "`user_image`, ";
+      $query .= "`user_role`) ";
+      $query .= "VALUES('{$username}', ";
+      $query .= "'{$user_password}', ";
+      $query .= "'{$user_fristname}', ";
+      $query .= "'{$user_lastname}', ";
+      $query .= "'{$user_email}', ";
+      $query .= "'{$user_image}', ";
+      $query .= "'{$user_role}') ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          echo SUCESS . "a new user was added";
+      }
+  }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////POSTS FUNCTIONS
