@@ -20,7 +20,7 @@
     <div class="col-lg-12">
 
     <h1 class="page-header">
-      Comments Page
+      Users Page
     <small>Author</small>
     </h1>
 
