@@ -32,7 +32,13 @@
                         $post_author = $row['post_author'];
                         $post_date = $row['post_date'];
                         $post_image = $row['post_image'];
+                        $post_status = $row['post_status'];
                         $post_content = substr($row['post_content'],0, 150);
+
+                        if ($post_status !== 'published') {
+                          echo "<h1>No posts are available</h1>";
+
+                        } else {
 
                         echo " <h1 class='page-header'>
                                 Page Heading
@@ -53,6 +59,7 @@
                                 <a class='btn btn-primary' href='post.php?post_id={$post_id}'>Read More <span class='glyphicon glyphicon-chevron-right'></span></a>
                                 <hr>";
                             }
+                          }
                         }
             ?>
 

@@ -1,7 +1,7 @@
 <?php
 
 if (isset($_POST['create_post'])) {
-    
+
     insertPost();
 }
 
@@ -21,13 +21,13 @@ if (isset($_POST['create_post'])) {
     queryAllCategories($count);
 
     //this will fetch categories ids and names
-    while ($row = mysqli_fetch_assoc($result)) {                            
-        $cat_title = $row['cat_title']; 
+    while ($row = mysqli_fetch_assoc($result)) {
+        $cat_title = $row['cat_title'];
         $cat_id = $row['cat_id'];
-        
+
         echo "<option value='{$cat_id}'>{$cat_title}</option>";
-       
-        } 
+
+        }
 ?>
         </select>
         </div>
@@ -37,7 +37,10 @@ if (isset($_POST['create_post'])) {
         </div>
         <div class="form-group">
             <label for="post_status">Post Status</label>
-            <input type="text" class="form-control" name="post_status">
+            <select class="form-control" name="post_status" >
+              <option value="published">published</option>
+              <option value="unpublished">unpublished</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="post_image">Post Image</label>
@@ -57,4 +60,3 @@ if (isset($_POST['create_post'])) {
         </div>
 
 </form>
-

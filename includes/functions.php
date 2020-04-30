@@ -9,7 +9,7 @@ function search() {
     global $connection;
     global $result;
     $search = $_POST['search'];
-    $query = "SELECT * FROM `posts` WHERE `post_tags` LIKE '%$search%' ";
+    $query = "SELECT * FROM `posts` WHERE `post_tags` LIKE '%$search%' AND `post_status` = 'published' ";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
@@ -23,6 +23,7 @@ function search() {
     global $result;
     $query = "SELECT * FROM `posts` ";
     $result = mysqli_query($connection, $query);
+    $count = mysqli_num_rows($result);
 
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
@@ -68,9 +69,10 @@ function search() {
 
         global $connection;
         global $result;
+
         $post_id = $_GET['post_id'];
 
-        $query = "SELECT * FROM `posts` WHERE `post_id` = $post_id ";
+        $query = "SELECT * FROM `posts` WHERE `post_id` = {$post_id} ";
         $result = mysqli_query($connection, $query);
 
 
@@ -94,7 +96,6 @@ function insertPost(){
     $post_content = $_POST['post_content'];
     $post_image = $_FILES['post_image']['name'];
     $post_image_tmp = $_FILES['post_image']['tmp_name'];
-    $post_comment_count = 1;
 
     move_uploaded_file($post_image_tmp, "../includes/images/$post_image");
 
@@ -114,7 +115,6 @@ function insertPost(){
     $query .= "`post_image`, ";
     $query .= "`post_content`, ";
     $query .= "`post_tags`, ";
-    $query .= "`post_comment_count`, ";
     $query .= "`post_status`) ";
     $query .= "VALUES('{$post_category_id}', ";
     $query .= "'{$post_title}', ";
@@ -123,7 +123,6 @@ function insertPost(){
     $query .= "'{$post_image}', ";
     $query .= "'{$post_content}', ";
     $query .= "'{$post_tags}', ";
-    $query .= "'{$post_comment_count}', ";
     $query .= "'{$post_status}')";
     $result = mysqli_query($connection, $query);
 
@@ -148,7 +147,6 @@ function updatePost(){
     $post_content = $_POST['post_content'];
     $post_image = $_FILES['post_image']['name'];
     $post_image_tmp = $_FILES['post_image']['tmp_name'];
-    $post_comment_count = 1;
 
     move_uploaded_file($post_image_tmp, "../includes/images/$post_image");
 
@@ -175,8 +173,7 @@ function updatePost(){
     $query .= "`post_date` = now(), ";
     $query .= "`post_content` = '{$post_content}', ";
     $query .= "`post_tags` = '{$post_tags}', ";
-    $query .= "`post_comment_count` = '{$post_comment_count}',  ";
-    $query .= "`post_status` = 'Updated' ";
+    $query .= "`post_status` = '{$post_status}' ";
     $query .= "WHERE `post_id` = '{$post_id}' ";
     $result = mysqli_query($connection, $query);
 
@@ -242,17 +239,17 @@ function deletePost() {
     function selectCategories(){
 
         global $connection;
-        global $result;
+        global $resultselectCategories;
 
         $cat_id =$_GET['update'];
 
         $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
-        $result = mysqli_query($connection, $query);
+        $resultselectCategories = mysqli_query($connection, $query);
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            $category_name = $row['cat_title'];
-        }
-        if (!$result) {
+        // while ($row = mysqli_fetch_assoc($resultselectCategories)) {
+        //     $category_name = $row['cat_title'];
+        // }
+        if (!$resultselectCategories) {
             die('Query' . FAIL . mysqli_error($connection));
             }
     }
@@ -344,11 +341,28 @@ function queyAllComments() {
 
   global $connection;
   global $result;
+
   $query = "SELECT * FROM `comments` ";
   $result = mysqli_query($connection, $query);
 
   if (!$result) {
       die('Query' . FAIL . mysqli_error($connection));
+      }
+
+  }
+
+  function queryAprovedComments() {
+
+    global $connection;
+    global $resultAprovedComments;
+
+    $comment_post_id  = $_GET['post_id'];
+
+    $query = "SELECT * FROM `comments` WHERE `comment_post_id` = {$comment_post_id} AND `comment_status` = 'approved' ORDER BY `comment_date` DESC ";
+    $resultAprovedComments = mysqli_query($connection, $query);
+
+    if (!$resultAprovedComments) {
+        die('Query' . FAIL . mysqli_error($connection));
       }
 
   }
@@ -380,20 +394,20 @@ function queyAllComments() {
       $query .= "`comment_author`, ";
       $query .= "`comment_email`, ";
       $query .= "`comment_content`, ";
-      $query .= "`comment_status`, ";
-      $query .= "`comment_date`) ";
+      $query .= "`comment_status`)";
       $query .= "VALUES('{$comment_post_id}', ";
       $query .= "'{$comment_author}', ";
       $query .= "'{$comment_email}', ";
       $query .= "'{$comment_content}', ";
-      $query .= "'{$comment_status}', ";
-      $query .= "now() )";
-      $result = mysqli_query($connection, $query);
+      $query .= "'{$comment_status}')";
+      $resultCreatComment = mysqli_query($connection, $query);
 
-      if (!$result) {
+      if (!$resultCreatComment) {
           die('Query' . FAIL . mysqli_error($connection));
       } else {
-          echo SUCESS . "you Comment this post";
+        $query2 = "UPDATE `posts` SET `post_comment_count` = `post_comment_count` + 1 WHERE `post_id` = {$comment_post_id} ";
+        $resultUpdateCommentCount = mysqli_query($connection, $query2);
+        echo SUCESS . "you Commented this post";
       }
   }
 
@@ -405,6 +419,25 @@ function queyAllComments() {
       $comment_id = $_GET['delete'];
 
       $query = "DELETE FROM `comments` WHERE `comment_id` = '{$comment_id}' ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          header("Location: comments.php");
+      }
+
+  }
+
+  function updateComment(){
+
+      global $connection;
+      global $result;
+
+      $comment_id = $_GET['update'];
+      $comment_status = $_GET['status'];
+
+      $query = "UPDATE `comments` SET `comment_status` = '{$comment_status}' WHERE `comment_id` = {$comment_id} ";
       $result = mysqli_query($connection, $query);
 
       if (!$result) {

@@ -107,7 +107,6 @@
 
     <?php
 
-
     while ($row = mysqli_fetch_assoc($resultselectCategories)) {                            
     $cat_title = $row['cat_title'];
 
