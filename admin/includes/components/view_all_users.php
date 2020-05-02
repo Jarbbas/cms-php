@@ -26,7 +26,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         $user_lastname = $row['user_lastname'];
         $user_email = $row['user_email'];
         $user_image = $row['user_image'];
-        $puser_role = $row['user_role'];
+        $user_role = $row['user_role'];
 
     echo "<tr>
     <td>{$user_id}</td>

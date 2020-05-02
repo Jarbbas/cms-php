@@ -31,8 +31,8 @@ function queyAllUsers() {
       $user_email = $_POST['user_email'];
       $user_image = $_POST['user_image'];
       $user_role = $_POST['user_role'];
-      $userimage = $_FILES['userimage']['name'];
-      $userimage_tmp = $_FILES['userimage']['tmp_name'];
+      $user_image = $_FILES['user_image']['name'];
+      $user_image_tmp = $_FILES['user_image']['tmp_name'];
 
       move_uploaded_file($user_image_tmp, "../includes/images/$user_image");
 
@@ -68,6 +68,23 @@ function queyAllUsers() {
       }
   }
 
+  function deleteUser() {
+
+      global $connection;
+      global $result;
+
+      $user_id =$_GET['delete'];
+
+      $query = "DELETE FROM `users` WHERE `user_id` = '{$user_id}' ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          header("Location: users.php");
+      }
+
+  }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////POSTS FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -254,7 +271,23 @@ function updatePost(){
 
 function deletePost() {
 
+    global $connection;function deletePost() {
+
     global $connection;
+    global $result;
+
+    $post_id =$_GET['delete'];
+
+    $query = "DELETE FROM `posts` WHERE `post_id` = '{$post_id}' ";
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+        die('Query' . FAIL . mysqli_error($connection));
+    } else {
+        header("Location: posts.php");
+    }
+
+}
     global $result;
 
     $post_id =$_GET['delete'];
