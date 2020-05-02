@@ -31,6 +31,24 @@
                     <!-- /.input-group -->
                 </div>
 
+                <div class='well'>
+                   <h4>Login</h4>
+                   <form action='' method='post'>
+                   <div class='form-group'>
+                       <input name='username' type='text' class='form-control' placeholder="Enter username...">
+                   </div>
+                   <div class='input-group'>
+                       <input name='password' type='password' class='form-control' placeholder="password...">
+                       <span class='input-group-btn'>
+                           <button name='submit' class='btn btn-primary' type='submit'>Enter
+
+                       </button>
+                       </span>
+                   </div>
+                   </form>
+                   <!-- /.input-group -->
+                </div>
+
                 <!-- Blog Categories Well -->
                 <div class="well">
                     <h4>Blog Categories</h4>
