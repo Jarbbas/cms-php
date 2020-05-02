@@ -33,14 +33,14 @@
 
                 <div class='well'>
                    <h4>Login</h4>
-                   <form action='login.php' method='post'>
+                   <form action='includes/components/login.php' method='post'>
                    <div class='form-group'>
-                       <input name='username' type='text' class='form-control' placeholder="Enter username...">
+                       <input name='username' type='text' class='form-control' placeholder="Enter username">
                    </div>
                    <div class='input-group'>
-                       <input name='password' type='password' class='form-control' placeholder="password...">
+                       <input name='password' type='password' class='form-control' placeholder="password">
                        <span class='input-group-btn'>
-                           <button name='submit' class='btn btn-primary' type='submit'>Enter
+                           <button name='login' class='btn btn-primary' type='submit'>Enter
                        </button>
                        </span>
                    </div>
