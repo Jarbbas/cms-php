@@ -15,7 +15,8 @@ if (isset($_POST['create_post'])) {
         </div>
         <div class="form-group">
             <label for="post_category_id">Post Category Id</label>
-            <select class="form-control" name="post_category_id" id="">
+            <select class="form-control" name="post_category_id">
+            <option value='default'>Select an option...</option>
 <?php
     queryCountCategories();
     queryAllCategories($count);
