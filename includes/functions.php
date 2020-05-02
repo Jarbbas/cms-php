@@ -17,6 +17,21 @@ function queyAllUsers() {
 
   }
 
+  function searchUserById() {
+
+      global $connection;
+      global $result;
+
+      $user_id = $_GET['user_id'];
+
+      $query = "SELECT * FROM `users` WHERE `user_id` = {$user_id} ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+          }
+
+  }
   //CRUD FUNCTIONS FOR POST
   function insertUser(){
 
@@ -65,6 +80,57 @@ function queyAllUsers() {
           die('Query' . FAIL . mysqli_error($connection));
       } else {
           echo SUCESS . "a new user was added";
+      }
+  }
+
+  function updateUser(){
+
+      global $connection;
+      global $result;
+
+      $user_id= $_GET['user_id'];
+      $username = $_POST['username'];
+      $user_password= $_POST['user_password'];
+      $user_fristname = $_POST['user_fristname'];
+      $user_lastname = $_POST['user_lastname'];
+      $user_email = $_POST['user_email'];
+      $user_image = $_POST['user_image'];
+      $user_role = $_POST['user_role'];
+      $user_image = $_FILES['user_image']['name'];
+      $user_image_tmp = $_FILES['user_image']['tmp_name'];
+
+      move_uploaded_file($user_image_tmp, "../includes/images/$user_image");
+
+          if(empty($user_image)) {
+          $query = "SELECT * FROM `users` WHERE `user_id` = '{$user_id}' ";
+          $result = mysqli_query($connection, $query);
+          while ($row = mysqli_fetch_assoc($result)) {
+                  $user_image = $row['user_image'];
+          }
+      }
+      // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+      // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+      $username = mysqli_real_escape_string($connection, $username);
+      $user_password = mysqli_real_escape_string($connection, $user_password);
+      $user_fristname = mysqli_real_escape_string($connection, $user_fristname);
+      $user_lastname = mysqli_real_escape_string($connection, $user_lastname);
+      $user_email = mysqli_real_escape_string($connection, $user_email);
+
+      $query = "UPDATE `users` SET ";
+      $query .= "`username` = '{$username}', ";
+      $query .= "`user_password` = '{$user_password}', ";
+      $query .= "`user_fristname` = '{$user_fristname}', ";
+      $query .= "`user_lastname` = '{$user_lastname}', ";
+      $query .= "`user_email` = '{$user_email}', ";
+      $query .= "`user_image` = '{$user_image}', ";
+      $query .= "`user_role` = '{$user_role}' ";
+      $query .= "WHERE `user_id` = '{$user_id}' ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          echo SUCESS . "the User was updated";
       }
   }
 

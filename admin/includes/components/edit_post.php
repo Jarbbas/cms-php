@@ -49,9 +49,19 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
         <div class="form-group">
             <label for="post_status">Post Status</label>
-            <select class="form-control" name="post_status" value ="<?php echo $post_status; ?>">
-              <option value="published">published</option>
-              <option value="unpublished">unpublished</option>
+            <select class="form-control" name="post_status">
+
+<?php
+  echo "<option value='{$post_status}'>{$post_status}</option>";
+
+  if($post_status == 'published') {
+    echo "<option value='unpublished'>unpublished</option>";
+  } else {
+      echo "<option value='published'>published</option>";
+  }
+
+?>
+
             </select>
         </div>
         <div class="form-group">

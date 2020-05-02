@@ -37,7 +37,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     <td>{$user_email}</td>
     <td><img width='100' src='../includes/images/{$user_image}'</img></td>
     <td>{$user_role}</td>
-    <td><a href='users.php?source=edit&post_id={$user_id}'>Edit</a></td>
+    <td><a href='users.php?source=edit&user_id={$user_id}'>Edit</a></td>
     <td><a href='users.php?delete={$user_id}'>Delete</a></td>
     </tr>";
 
