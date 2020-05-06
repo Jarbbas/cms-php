@@ -9,11 +9,11 @@ include_once($path_to_header_admin);
 
         <!-- Navigation -->
 
-<?php 
-    include_once($path_to_navigation_admin); 
+<?php
+    include_once($path_to_navigation_admin);
 ?>
 
-        <div id="page-wrapper"> 
+        <div id="page-wrapper">
 
             <div class="container-fluid">
 
@@ -21,8 +21,7 @@ include_once($path_to_header_admin);
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Admin Page
-                            <small>conteudo administrativo</small>
+                            Welcome <small><?php echo $_SESSION['first_name']; ?> </small>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
@@ -44,7 +43,7 @@ include_once($path_to_header_admin);
 
     </div>
     <!-- /#wrapper -->
-    
-<?php 
-    include_once($path_to_footer_admin); 
+
+<?php
+    include_once($path_to_footer_admin);
 ?>
