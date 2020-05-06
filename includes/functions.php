@@ -1,4 +1,28 @@
 <?php
+
+function userValidationLogin() {
+
+  global $connection;
+  global $resultLoginUser;
+
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+  $username = mysqli_real_escape_string($connection, $username);
+  $user_password = mysqli_real_escape_string($connection, $password);
+
+  $query = "SELECT * FROM `users` WHERE `username` = '{$username}' ";
+  $resultLoginUser = mysqli_query($connection, $query);
+
+  if (!$resultLoginUser) {
+      die('Query' . FAIL . mysqli_error($connection));
+      }
+}
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////USERS FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////
