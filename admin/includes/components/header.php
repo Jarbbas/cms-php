@@ -24,7 +24,12 @@ will silently discard the buffer contents.*/
   include_once($path_to_functions);
   include_once($path_to_messages);
 
+if (isset($_SESSION['user_role'])) {
 
+      if ($_SESSION['user_role'] !== 'administrator') {
+            header ("Location: /cms-php/index.php");
+      }
+}
 
 ?>
 
