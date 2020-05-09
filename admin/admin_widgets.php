@@ -1,6 +1,6 @@
-       
+
                 <!-- /.row -->
-                
+
 <div class="row">
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-primary">
@@ -10,7 +10,10 @@
                         <i class="fa fa-file-text fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                  <div class='huge'>12</div>
+                      <?php
+                        queyAllPosts()
+                      ?>
+                  <div class='huge'><?php echo $countPosts; ?></div>
                         <div>Posts</div>
                     </div>
                 </div>
@@ -32,7 +35,10 @@
                         <i class="fa fa-comments fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                     <div class='huge'>23</div>
+                      <?php
+                        queyAllComments();
+                       ?>
+                     <div class='huge'><?php echo $countAllComments; ?></div>
                       <div>Comments</div>
                     </div>
                 </div>
@@ -54,7 +60,10 @@
                         <i class="fa fa-user fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                    <div class='huge'>23</div>
+                      <?php
+                        queyAllUsers();
+                       ?>
+                    <div class='huge'><?php echo $countAllUsers; ?></div>
                         <div> Users</div>
                     </div>
                 </div>
@@ -76,7 +85,10 @@
                         <i class="fa fa-list fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                        <div class='huge'>13</div>
+                      <?php
+                        queryCountCategories();
+                       ?>
+                        <div class='huge'><?php echo $countCountCategories; ?></div>
                          <div>Categories</div>
                     </div>
                 </div>
@@ -92,3 +104,40 @@
     </div>
 </div>
                 <!-- /.row -->
+                <div class="row">
+                  <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['info', 'count'],
+
+          <?php
+
+            $element_text = ['Active Posts', 'Comments', 'Users', 'Categories'];
+            $element_count = [$countPosts, $countAllComments, $countAllUsers, $countCountCategories];
+
+            for ($i=0; $i < 4 ; $i++) {
+              echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
+            }
+
+          ?>
+
+        ]);
+
+        var options = {
+          chart: {
+            title: '',
+            subtitle: '',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+    <div id="columnchart_material" style="width: 100%; height: 500px;"></div>
+
+  </div>
