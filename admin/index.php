@@ -23,18 +23,18 @@ include_once($path_to_header_admin);
                         <h1 class="page-header">
                             Welcome <small><?php echo $_SESSION['first_name']; ?> </small>
                         </h1>
-                        <ol class="breadcrumb">
+                        <!-- <ol class="breadcrumb">
                             <li>
                                 <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-file"></i> Blank Page
                             </li>
-                        </ol>
+                        </ol> -->
                     </div>
                 </div>
                 <!-- /.row -->
-
+                  <?php include "admin_widgets.html";?>
             </div>
             <!-- /.container-fluid -->
 
