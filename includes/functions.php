@@ -46,7 +46,11 @@ function queyAllUsers() {
       global $connection;
       global $result;
 
-      $user_id = $_GET['user_id'];
+      if (isset($_GET['user_id'])) {
+        $user_id = $_GET['user_id'];
+      } else {
+        $user_id = $_SESSION['user_id'];
+      }
 
       $query = "SELECT * FROM `users` WHERE `user_id` = {$user_id} ";
       $result = mysqli_query($connection, $query);
@@ -112,7 +116,12 @@ function queyAllUsers() {
       global $connection;
       global $result;
 
-      $user_id= $_GET['user_id'];
+      if (isset($_GET['user_id'])) {
+        $user_id = $_GET['user_id'];
+      } else {
+        $user_id = $_SESSION['user_id'];
+      }
+
       $username = $_POST['username'];
       $user_password= $_POST['user_password'];
       $user_fristname = $_POST['user_fristname'];
