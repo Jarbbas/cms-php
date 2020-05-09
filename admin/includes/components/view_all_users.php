@@ -17,7 +17,7 @@
 
 queyAllUsers();
 
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($resultAllUsers)) {
 
         $user_id= $row['user_id'];
         $username = $row['username'];

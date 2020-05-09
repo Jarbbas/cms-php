@@ -18,7 +18,7 @@
 
 queyAllPosts();
 
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($resultAllPosts)) {
 
         $post_id = $row['post_id'];
         $post_author = $row['post_author'];

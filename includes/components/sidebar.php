@@ -57,10 +57,10 @@
                               <?php
                                queryAllCategories(5);
 
-                               if (!$result) {
+                               if (!$resultAllCategories) {
                                 die('query failed ' . mysqli_error($connection));
                                     } else {
-                                    while ($row = mysqli_fetch_assoc($result)) {
+                                    while ($row = mysqli_fetch_assoc($resultAllCategories)) {
                                     $cat_title = $row['cat_title'];
                                     $cat_id = $row['cat_id'];
                                     echo "<li><a href='category.php?cat_id={$cat_id}'>{$cat_title}</a></li>";

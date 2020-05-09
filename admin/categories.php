@@ -74,9 +74,9 @@
 
     <?php
     queryCountCategories(); //outputs $count so we can list all the categories from MYSQL
-    queryAllCategories($count);
+    queryAllCategories($countCountCategories);
 
-    while ($row = mysqli_fetch_assoc($result)) {
+    while ($row = mysqli_fetch_assoc($resultAllCategories)) {
     $cat_title = $row['cat_title'];
     $cat_id = $row['cat_id'];
 
@@ -107,7 +107,7 @@
 
     <?php
 
-    while ($row = mysqli_fetch_assoc($resultselectCategories)) {                            
+    while ($row = mysqli_fetch_assoc($resultselectCategories)) {
     $cat_title = $row['cat_title'];
 
     ?>

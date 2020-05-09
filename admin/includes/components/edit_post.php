@@ -30,10 +30,10 @@ while ($row = mysqli_fetch_assoc($result)) {
         <select class="form-control" name="post_category" id="">
 <?php
     queryCountCategories();
-    queryAllCategories($count);
+    queryAllCategories($countCountCategories);
 
     //this will fetch categories ids and names
-    while ($row = mysqli_fetch_assoc($result)) {
+    while ($row = mysqli_fetch_assoc($resultAllCategories)) {
         $cat_title = $row['cat_title'];
         $cat_id = $row['cat_id'];
 

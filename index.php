@@ -23,10 +23,10 @@
 
             queyAllPosts();
 
-            if (!$result) {
+            if (!$resultAllPosts) {
                 die('query failed ' . mysqli_error($connection));
                 } else {
-                        while ($row = mysqli_fetch_assoc($result)) {
+                        while ($row = mysqli_fetch_assoc($resultAllPosts)) {
                         $post_id = $row['post_id'];
                         $post_title = $row['post_title'];
                         $post_author = $row['post_author'];

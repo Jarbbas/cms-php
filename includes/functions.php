@@ -20,7 +20,6 @@ function userValidationLogin() {
 }
 
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////USERS FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -28,12 +27,14 @@ function userValidationLogin() {
 function queyAllUsers() {
 
   global $connection;
-  global $result;
-  $query = "SELECT * FROM `users` ";
-  $result = mysqli_query($connection, $query);
-  $count = mysqli_num_rows($result);
+  global $resultAllUsers;
+  global $countAllUsers;
 
-  if (!$result) {
+  $query = "SELECT * FROM `users` ";
+  $resultAllUsers = mysqli_query($connection, $query);
+  $countAllUsers = mysqli_num_rows($resultAllUsers);
+
+  if (!$resultAllUsers) {
       die('Query' . FAIL . mysqli_error($connection));
       }
 
@@ -202,12 +203,14 @@ function search() {
   function queyAllPosts() {
 
     global $connection;
-    global $result;
-    $query = "SELECT * FROM `posts` ";
-    $result = mysqli_query($connection, $query);
-    $count = mysqli_num_rows($result);
+    global $resultAllPosts;
+    global $countPosts;
 
-    if (!$result) {
+    $query = "SELECT * FROM `posts` ";
+    $resultAllPosts = mysqli_query($connection, $query);
+    $countPosts = mysqli_num_rows($resultAllPosts);
+
+    if (!$resultAllPosts) {
         die('Query' . FAIL . mysqli_error($connection));
         }
 
@@ -407,13 +410,14 @@ function deletePost() {
     function queryCountCategories() {
 
         global $connection;
-        global $result;
-        global $count;
-        $query = "SELECT * FROM `categories`";
-        $result = mysqli_query($connection, $query);
-        $count = mysqli_num_rows($result);
+        global $resultCountCategories;
+        global $countCountCategories;
 
-        if (!$result) {
+        $query = "SELECT * FROM `categories`";
+        $resultCountCategories = mysqli_query($connection, $query);
+        $countCountCategories = mysqli_num_rows($resultCountCategories);
+
+        if (!$resultCountCategories) {
             die('Query' . FAIL . mysqli_error($connection));
             }
 
@@ -422,13 +426,13 @@ function deletePost() {
     function queryAllCategories($limit) {
 
     global $connection;
-    global $result;
+    global $resultAllCategories;
 
     $cat_limit = (isset($limit)) ? $cat_limit = $limit : $cat_limit = 5;
     $query = "SELECT * FROM `categories` ORDER BY `cat_id` ASC LIMIT $cat_limit ";
-    $result = mysqli_query($connection, $query);
+    $resultAllCategories = mysqli_query($connection, $query);
 
-    if (!$result) {
+    if (!$resultAllCategories) {
         die('Query' . FAIL . mysqli_error($connection));
         }
 
@@ -539,11 +543,13 @@ function queyAllComments() {
 
   global $connection;
   global $result;
+  global $countAllComments;
 
   $query = "SELECT * FROM `comments` ";
-  $result = mysqli_query($connection, $query);
+  $resultAllComments = mysqli_query($connection, $query);
+  $countAllComments = mysqli_num_rows($resultAllComments);
 
-  if (!$result) {
+  if (!$resultAllComments) {
       die('Query' . FAIL . mysqli_error($connection));
       }
 

@@ -15,7 +15,7 @@
 <?php
 queyAllComments();
 
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($resultAllComments)) {
 
         $comment_id = $row['comment_id'];
         $comment_author = $row['comment_author'];
