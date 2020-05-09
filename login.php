@@ -22,7 +22,7 @@
 
     while($row = mysqli_fetch_assoc($resultLoginUser)) {
 
-        $db_username_id = $row['user_header("Location: {$path_to_admin}")id'];
+        $db_user_id = $row['user_id'];
         $db_username = $row['username'];
         $db_user_password = $row['user_password'];
         $db_user_fristname = $row['user_fristname'];
@@ -38,6 +38,7 @@
     $_SESSION['first_name'] = $db_user_fristname;
     $_SESSION['last_name'] = $db_user_lastname;
     $_SESSION['user_role'] = $db_user_role;
+    $_SESSION['user_id'] = $db_user_id;
 
     header("Location: admin/");
   } else {
