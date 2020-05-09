@@ -13,7 +13,7 @@
    <tbody>
 
 <?php
-queyAllComments();
+queryAllComments();
 
 while ($row = mysqli_fetch_assoc($resultAllComments)) {
 

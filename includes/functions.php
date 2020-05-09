@@ -40,6 +40,22 @@ function queyAllUsers() {
 
   }
 
+  function querySubscribers() {
+
+    global $connection;
+    global $resultSubscribers;
+    global $countSubscribers;
+
+    $query = "SELECT * FROM `users` WHERE `user_role` = 'subscriber' ";
+    $resultSubscribers = mysqli_query($connection, $query);
+    $countSubscribers = mysqli_num_rows($resultSubscribers);
+
+    if (!$resultSubscribers) {
+        die('Query' . FAIL . mysqli_error($connection));
+        }
+
+    }
+
   function searchUserById() {
 
       global $connection;
@@ -187,20 +203,22 @@ function queyAllUsers() {
 //////////////////////////////POSTS FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-function search() {
+function queryDraftPosts() {
 
     global $connection;
-    global $result;
-    $search = $_POST['search'];
-    $query = "SELECT * FROM `posts` WHERE `post_tags` LIKE '%$search%' AND `post_status` = 'published' ";
-    $result = mysqli_query($connection, $query);
+    global $resultDraftPosts;
+    global $countDraftPosts;
 
-    if (!$result) {
+    $query = "SELECT * FROM `posts` WHERE  `post_status` != 'published' ";
+    $resultDraftPosts = mysqli_query($connection, $query);
+    $countDraftPosts = mysqli_num_rows($resultDraftPosts);
+
+    if (!$resultDraftPosts) {
         die('Query' . FAIL . mysqli_error($connection));
         }
 }
 
-  function queyAllPosts() {
+  function queryAllPosts() {
 
     global $connection;
     global $resultAllPosts;
@@ -539,7 +557,7 @@ function deletePost() {
 //////////////////////////////COMMENTS FUNCTIONS ///////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
-function queyAllComments() {
+function queryAllComments() {
 
   global $connection;
   global $result;
@@ -571,6 +589,21 @@ function queyAllComments() {
 
   }
 
+  function queryPendingComments() {
+
+    global $connection;
+    global $resultPendingComments;
+    global $countPendingComments;
+
+    $query = "SELECT * FROM `comments` WHERE `comment_status` != 'approved'";
+    $resultPendingComments = mysqli_query($connection, $query);
+    $countPendingComments = mysqli_num_rows($resultPendingComments);
+
+    if (!$resultPendingComments) {
+        die('Query' . FAIL . mysqli_error($connection));
+      }
+
+  }
   //////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////CRUD FUNCTIONS FOR COMMENTS //////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////////////////////

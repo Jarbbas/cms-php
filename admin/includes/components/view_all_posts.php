@@ -16,7 +16,7 @@
 
 <?php
 
-queyAllPosts();
+queryAllPosts();
 
 while ($row = mysqli_fetch_assoc($resultAllPosts)) {
 

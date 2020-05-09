@@ -21,7 +21,7 @@
 
             <?php
 
-            queyAllPosts();
+            queryAllPosts();
 
             if (!$resultAllPosts) {
                 die('query failed ' . mysqli_error($connection));

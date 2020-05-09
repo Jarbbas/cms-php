@@ -34,7 +34,7 @@ include_once($path_to_header_admin);
                     </div>
                 </div>
                 <!-- /.row -->
-                  <?php include "admin_widgets.php";?>
+                  <?php include "admin_widgets.php"; ?>
             </div>
             <!-- /.container-fluid -->
 
