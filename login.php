@@ -39,9 +39,9 @@
     $_SESSION['last_name'] = $db_user_lastname;
     $_SESSION['user_role'] = $db_user_role;
 
-    header("Location: ../../admin/");
+    header("Location: admin/");
   } else {
-    header("Location: ../../index.php");
+    header("Location: index.php");
   }
 
 }
