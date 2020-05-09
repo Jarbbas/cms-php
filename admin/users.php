@@ -21,7 +21,6 @@
 
     <h1 class="page-header">
       Users Page
-    <small>Author</small>
     </h1>
 
 
