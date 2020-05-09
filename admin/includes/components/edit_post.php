@@ -1,23 +1,23 @@
 <?php
 
 if (isset($_POST['edit_post'])) {
-    
+
     updatePost();
-    
+
 }
 
 searchPostById();
 
-while ($row = mysqli_fetch_assoc($result)) { 
-    $post_id = $row['post_id'];                       
+while ($row = mysqli_fetch_assoc($result)) {
+    $post_id = $row['post_id'];
     $post_author = $row['post_author'];
     $post_title = $row['post_title'];
     $post_category_id = $row['post_category_id'];
     $post_status = $row['post_status'];
-    $post_image = $row['post_image'];              
+    $post_image = $row['post_image'];
     $post_tags = $row['post_tags'];
     $post_comment_count = $row['post_comment_count'];
-    $post_content = $row['post_content'];              
+    $post_content = $row['post_content'];
 
 ?>
 <form action="" method="post" enctype="multipart/form-data">
@@ -33,13 +33,13 @@ while ($row = mysqli_fetch_assoc($result)) {
     queryAllCategories($count);
 
     //this will fetch categories ids and names
-    while ($row = mysqli_fetch_assoc($result)) {                            
-        $cat_title = $row['cat_title']; 
+    while ($row = mysqli_fetch_assoc($result)) {
+        $cat_title = $row['cat_title'];
         $cat_id = $row['cat_id'];
-        
+
         echo "<option value='{$cat_id}'>{$cat_title}</option>";
-       
-        } 
+
+        }
 ?>
         </select>
         </div>
@@ -49,7 +49,20 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
         <div class="form-group">
             <label for="post_status">Post Status</label>
-            <input type="text" class="form-control" name="post_status" value ="<?php echo $post_status; ?>">
+            <select class="form-control" name="post_status">
+
+<?php
+  echo "<option value='{$post_status}'>{$post_status}</option>";
+
+  if($post_status == 'published') {
+    echo "<option value='unpublished'>unpublished</option>";
+  } else {
+      echo "<option value='published'>published</option>";
+  }
+
+?>
+
+            </select>
         </div>
         <div class="form-group">
             <img width="100" src="../includes/images/<?php echo $post_image;?>" alt="">

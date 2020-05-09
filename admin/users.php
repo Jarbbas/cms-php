@@ -20,7 +20,7 @@
     <div class="col-lg-12">
 
     <h1 class="page-header">
-      Comments Page
+      Users Page
     <small>Author</small>
     </h1>
 
@@ -38,19 +38,19 @@ if (isset($_GET['source'])) {
     switch ($source) {
 
         case 'add':
-            include "includes/components/add_post.php";
+            include "includes/components/add_user.php";
             break;
 
         case 'edit':
-            include "includes/components/edit_post.php";
+            include "includes/components/edit_user.php";
             break;
 
         case 'view':
-            include "includes/components/view_all_comments.php";
+            include "includes/components/view_all_users.php";
             break;
 
         default:
-            include "includes/components/view_all_comments.php";
+            include "includes/components/view_all_users.php";
             break;
     }
 

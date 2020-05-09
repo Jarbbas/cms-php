@@ -1,5 +1,180 @@
 <?php
 
+function userValidationLogin() {
+
+  global $connection;
+  global $resultLoginUser;
+
+  $username = $_POST['username'];
+  $password = $_POST['password'];
+
+  $username = mysqli_real_escape_string($connection, $username);
+  $user_password = mysqli_real_escape_string($connection, $password);
+
+  $query = "SELECT * FROM `users` WHERE `username` = '{$username}' ";
+  $resultLoginUser = mysqli_query($connection, $query);
+
+  if (!$resultLoginUser) {
+      die('Query' . FAIL . mysqli_error($connection));
+      }
+}
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////USERS FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+function queyAllUsers() {
+
+  global $connection;
+  global $result;
+  $query = "SELECT * FROM `users` ";
+  $result = mysqli_query($connection, $query);
+  $count = mysqli_num_rows($result);
+
+  if (!$result) {
+      die('Query' . FAIL . mysqli_error($connection));
+      }
+
+  }
+
+  function searchUserById() {
+
+      global $connection;
+      global $result;
+
+      $user_id = $_GET['user_id'];
+
+      $query = "SELECT * FROM `users` WHERE `user_id` = {$user_id} ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+          }
+
+  }
+  //CRUD FUNCTIONS FOR POST
+  function insertUser(){
+
+      global $connection;
+      global $result;
+
+      $user_id= $_POST['user_id'];
+      $username = $_POST['username'];
+      $user_password= $_POST['user_password'];
+      $user_fristname = $_POST['user_fristname'];
+      $user_lastname = $_POST['user_lastname'];
+      $user_email = $_POST['user_email'];
+      $user_image = $_POST['user_image'];
+      $user_role = $_POST['user_role'];
+      $user_image = $_FILES['user_image']['name'];
+      $user_image_tmp = $_FILES['user_image']['tmp_name'];
+
+      move_uploaded_file($user_image_tmp, "../includes/images/$user_image");
+
+      // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+      // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+      $username = mysqli_real_escape_string($connection, $username);
+      $user_password = mysqli_real_escape_string($connection, $user_password);
+      $user_fristname = mysqli_real_escape_string($connection, $user_fristname);
+      $user_lastname = mysqli_real_escape_string($connection, $user_lastname);
+      $user_email = mysqli_real_escape_string($connection, $user_email);
+
+      $query = "INSERT INTO `users` ";
+      $query .= "(`username`, ";
+      $query .= "`user_password`, ";
+      $query .= "`user_fristname`, ";
+      $query .= "`user_lastname`, ";
+      $query .= "`user_email`, ";
+      $query .= "`user_image`, ";
+      $query .= "`user_role`) ";
+      $query .= "VALUES('{$username}', ";
+      $query .= "'{$user_password}', ";
+      $query .= "'{$user_fristname}', ";
+      $query .= "'{$user_lastname}', ";
+      $query .= "'{$user_email}', ";
+      $query .= "'{$user_image}', ";
+      $query .= "'{$user_role}') ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          echo SUCESS . "a new user was added";
+      }
+  }
+
+  function updateUser(){
+
+      global $connection;
+      global $result;
+
+      $user_id= $_GET['user_id'];
+      $username = $_POST['username'];
+      $user_password= $_POST['user_password'];
+      $user_fristname = $_POST['user_fristname'];
+      $user_lastname = $_POST['user_lastname'];
+      $user_email = $_POST['user_email'];
+      $user_image = $_POST['user_image'];
+      $user_role = $_POST['user_role'];
+      $user_image = $_FILES['user_image']['name'];
+      $user_image_tmp = $_FILES['user_image']['tmp_name'];
+
+      move_uploaded_file($user_image_tmp, "../includes/images/$user_image");
+
+          if(empty($user_image)) {
+          $query = "SELECT * FROM `users` WHERE `user_id` = '{$user_id}' ";
+          $result = mysqli_query($connection, $query);
+          while ($row = mysqli_fetch_assoc($result)) {
+                  $user_image = $row['user_image'];
+          }
+      }
+      // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+      // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+      $username = mysqli_real_escape_string($connection, $username);
+      $user_password = mysqli_real_escape_string($connection, $user_password);
+      $user_fristname = mysqli_real_escape_string($connection, $user_fristname);
+      $user_lastname = mysqli_real_escape_string($connection, $user_lastname);
+      $user_email = mysqli_real_escape_string($connection, $user_email);
+
+      $query = "UPDATE `users` SET ";
+      $query .= "`username` = '{$username}', ";
+      $query .= "`user_password` = '{$user_password}', ";
+      $query .= "`user_fristname` = '{$user_fristname}', ";
+      $query .= "`user_lastname` = '{$user_lastname}', ";
+      $query .= "`user_email` = '{$user_email}', ";
+      $query .= "`user_image` = '{$user_image}', ";
+      $query .= "`user_role` = '{$user_role}' ";
+      $query .= "WHERE `user_id` = '{$user_id}' ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          echo SUCESS . "the User was updated";
+      }
+  }
+
+  function deleteUser() {
+
+      global $connection;
+      global $result;
+
+      $user_id =$_GET['delete'];
+
+      $query = "DELETE FROM `users` WHERE `user_id` = '{$user_id}' ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          header("Location: users.php");
+      }
+
+  }
 ////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////POSTS FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -9,7 +184,7 @@ function search() {
     global $connection;
     global $result;
     $search = $_POST['search'];
-    $query = "SELECT * FROM `posts` WHERE `post_tags` LIKE '%$search%' ";
+    $query = "SELECT * FROM `posts` WHERE `post_tags` LIKE '%$search%' AND `post_status` = 'published' ";
     $result = mysqli_query($connection, $query);
 
     if (!$result) {
@@ -23,6 +198,7 @@ function search() {
     global $result;
     $query = "SELECT * FROM `posts` ";
     $result = mysqli_query($connection, $query);
+    $count = mysqli_num_rows($result);
 
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
@@ -68,9 +244,10 @@ function search() {
 
         global $connection;
         global $result;
+
         $post_id = $_GET['post_id'];
 
-        $query = "SELECT * FROM `posts` WHERE `post_id` = $post_id ";
+        $query = "SELECT * FROM `posts` WHERE `post_id` = {$post_id} ";
         $result = mysqli_query($connection, $query);
 
 
@@ -94,7 +271,6 @@ function insertPost(){
     $post_content = $_POST['post_content'];
     $post_image = $_FILES['post_image']['name'];
     $post_image_tmp = $_FILES['post_image']['tmp_name'];
-    $post_comment_count = 1;
 
     move_uploaded_file($post_image_tmp, "../includes/images/$post_image");
 
@@ -114,7 +290,6 @@ function insertPost(){
     $query .= "`post_image`, ";
     $query .= "`post_content`, ";
     $query .= "`post_tags`, ";
-    $query .= "`post_comment_count`, ";
     $query .= "`post_status`) ";
     $query .= "VALUES('{$post_category_id}', ";
     $query .= "'{$post_title}', ";
@@ -123,7 +298,6 @@ function insertPost(){
     $query .= "'{$post_image}', ";
     $query .= "'{$post_content}', ";
     $query .= "'{$post_tags}', ";
-    $query .= "'{$post_comment_count}', ";
     $query .= "'{$post_status}')";
     $result = mysqli_query($connection, $query);
 
@@ -148,7 +322,6 @@ function updatePost(){
     $post_content = $_POST['post_content'];
     $post_image = $_FILES['post_image']['name'];
     $post_image_tmp = $_FILES['post_image']['tmp_name'];
-    $post_comment_count = 1;
 
     move_uploaded_file($post_image_tmp, "../includes/images/$post_image");
 
@@ -175,8 +348,7 @@ function updatePost(){
     $query .= "`post_date` = now(), ";
     $query .= "`post_content` = '{$post_content}', ";
     $query .= "`post_tags` = '{$post_tags}', ";
-    $query .= "`post_comment_count` = '{$post_comment_count}',  ";
-    $query .= "`post_status` = 'Updated' ";
+    $query .= "`post_status` = '{$post_status}' ";
     $query .= "WHERE `post_id` = '{$post_id}' ";
     $result = mysqli_query($connection, $query);
 
@@ -189,9 +361,26 @@ function updatePost(){
 
 function deletePost() {
 
+    global $connection;function deletePost() {
+
     global $connection;
     global $result;
-    $post_id =$_GET['deletePost'];
+
+    $post_id =$_GET['delete'];
+
+    $query = "DELETE FROM `posts` WHERE `post_id` = '{$post_id}' ";
+    $result = mysqli_query($connection, $query);
+
+    if (!$result) {
+        die('Query' . FAIL . mysqli_error($connection));
+    } else {
+        header("Location: posts.php");
+    }
+
+}
+    global $result;
+
+    $post_id =$_GET['delete'];
 
     $query = "DELETE FROM `posts` WHERE `post_id` = '{$post_id}' ";
     $result = mysqli_query($connection, $query);
@@ -227,6 +416,7 @@ function deletePost() {
 
     global $connection;
     global $result;
+
     $cat_limit = (isset($limit)) ? $cat_limit = $limit : $cat_limit = 5;
     $query = "SELECT * FROM `categories` ORDER BY `cat_id` ASC LIMIT $cat_limit ";
     $result = mysqli_query($connection, $query);
@@ -237,23 +427,37 @@ function deletePost() {
 
     }
 
-    function selectCategories($post_category_id){
+    function selectCategories(){
 
         global $connection;
         global $resultselectCategories;
 
-        if(empty($post_category_id)) {
-            $cat_id =$_GET['update'];
-        } else {
-            $cat_id = $post_category_id;
-        }
+        $cat_id =$_GET['update'];
 
         $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
         $resultselectCategories = mysqli_query($connection, $query);
 
+        // while ($row = mysqli_fetch_assoc($resultselectCategories)) {
+        //     $category_name = $row['cat_title'];
+        // }
         if (!$resultselectCategories) {
             die('Query' . FAIL . mysqli_error($connection));
             }
+    }
+
+    function selectCatName($post_category_id){
+
+        global $connection;
+        global $resultCatName;
+
+        $cat_id = $post_category_id;
+
+        $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
+        $resultCatId = mysqli_query($connection, $query);
+
+      if (!$resultCatId) {
+            die('Query' . FAIL . mysqli_error($connection));
+          }
     }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -328,11 +532,28 @@ function queyAllComments() {
 
   global $connection;
   global $result;
+
   $query = "SELECT * FROM `comments` ";
   $result = mysqli_query($connection, $query);
 
   if (!$result) {
       die('Query' . FAIL . mysqli_error($connection));
+      }
+
+  }
+
+  function queryAprovedComments() {
+
+    global $connection;
+    global $resultAprovedComments;
+
+    $comment_post_id  = $_GET['post_id'];
+
+    $query = "SELECT * FROM `comments` WHERE `comment_post_id` = {$comment_post_id} AND `comment_status` = 'approved' ORDER BY `comment_date` DESC ";
+    $resultAprovedComments = mysqli_query($connection, $query);
+
+    if (!$resultAprovedComments) {
+        die('Query' . FAIL . mysqli_error($connection));
       }
 
   }
@@ -364,20 +585,20 @@ function queyAllComments() {
       $query .= "`comment_author`, ";
       $query .= "`comment_email`, ";
       $query .= "`comment_content`, ";
-      $query .= "`comment_status`, ";
-      $query .= "`comment_date`) ";
+      $query .= "`comment_status`)";
       $query .= "VALUES('{$comment_post_id}', ";
       $query .= "'{$comment_author}', ";
       $query .= "'{$comment_email}', ";
       $query .= "'{$comment_content}', ";
-      $query .= "'{$comment_status}', ";
-      $query .= "now() )";
-      $result = mysqli_query($connection, $query);
+      $query .= "'{$comment_status}')";
+      $resultCreatComment = mysqli_query($connection, $query);
 
-      if (!$result) {
+      if (!$resultCreatComment) {
           die('Query' . FAIL . mysqli_error($connection));
       } else {
-          echo SUCESS . "you Comment this post";
+        $query2 = "UPDATE `posts` SET `post_comment_count` = `post_comment_count` + 1 WHERE `post_id` = {$comment_post_id} ";
+        $resultUpdateCommentCount = mysqli_query($connection, $query2);
+        echo SUCESS . "you Commented this post";
       }
   }
 
@@ -385,9 +606,29 @@ function queyAllComments() {
 
       global $connection;
       global $result;
+
       $comment_id = $_GET['delete'];
 
       $query = "DELETE FROM `comments` WHERE `comment_id` = '{$comment_id}' ";
+      $result = mysqli_query($connection, $query);
+
+      if (!$result) {
+          die('Query' . FAIL . mysqli_error($connection));
+      } else {
+          header("Location: comments.php");
+      }
+
+  }
+
+  function updateComment(){
+
+      global $connection;
+      global $result;
+
+      $comment_id = $_GET['update'];
+      $comment_status = $_GET['status'];
+
+      $query = "UPDATE `comments` SET `comment_status` = '{$comment_status}' WHERE `comment_id` = {$comment_id} ";
       $result = mysqli_query($connection, $query);
 
       if (!$result) {
