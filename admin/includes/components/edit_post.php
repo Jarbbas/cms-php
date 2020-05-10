@@ -55,7 +55,7 @@ while ($row = mysqli_fetch_assoc($result)) {
   echo "<option value='{$post_status}'>{$post_status}</option>";
 
   if($post_status == 'published') {
-    echo "<option value='unpublished'>unpublished</option>";
+    echo "<option value='draft'>draft</option>";
   } else {
       echo "<option value='published'>published</option>";
   }

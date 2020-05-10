@@ -40,7 +40,7 @@ if (isset($_POST['create_post'])) {
             <label for="post_status">Post Status</label>
             <select class="form-control" name="post_status" >
               <option value="published">published</option>
-              <option value="unpublished">unpublished</option>
+              <option value="draft">draft</option>
             </select>
         </div>
         <div class="form-group">
