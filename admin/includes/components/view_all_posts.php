@@ -44,6 +44,12 @@ while ($row = mysqli_fetch_assoc($resultAllPosts)) {
         die('Query' . FAIL . mysqli_error($connection));
         }
 
+        if (isset($post_comment_count)) {
+        $post_comment_count = $post_comment_count;
+      } else {
+        $post_comment_count = 0;
+      }
+
     echo"<td>{$category_name}</td>
     <td>{$post_status}</td>
     <td><img width='100' src='../includes/images/{$post_image}'</img></td>
