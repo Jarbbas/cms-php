@@ -122,7 +122,7 @@ function queyAllUsers() {
       if (!$result) {
           die('Query' . FAIL . mysqli_error($connection));
       } else {
-          echo SUCESS . "a new user was added";
+          echo SUCESS . "a new user was added" . " " . "<a href='users.php'>View Users</a>";
       }
   }
 
@@ -178,7 +178,7 @@ function queyAllUsers() {
       if (!$result) {
           die('Query' . FAIL . mysqli_error($connection));
       } else {
-          echo SUCESS . "the User was updated";
+          echo SUCESS . "the User was updated" . " " . "<a href='users.php'>View Users</a>";
       }
   }
 
@@ -218,15 +218,30 @@ function queryDraftPosts() {
         }
 }
 
+function queryPublishedPosts() {
+
+    global $connection;
+    global $resultPublishedPosts;
+    global $countPublishedPosts;
+
+    $query = "SELECT * FROM `posts` WHERE  `post_status` = 'published' ";
+    $resultPublishedPosts = mysqli_query($connection, $query);
+    $countPublishedPosts = mysqli_num_rows($resultPublishedPosts);
+
+    if (!$resultPublishedPosts) {
+        die('Query' . FAIL . mysqli_error($connection));
+        }
+}
+
   function queryAllPosts() {
 
     global $connection;
     global $resultAllPosts;
-    global $countPosts;
+    global $countAllPosts;
 
     $query = "SELECT * FROM `posts` ";
     $resultAllPosts = mysqli_query($connection, $query);
-    $countPosts = mysqli_num_rows($resultAllPosts);
+    $countAllPosts = mysqli_num_rows($resultAllPosts);
 
     if (!$resultAllPosts) {
         die('Query' . FAIL . mysqli_error($connection));
@@ -332,7 +347,7 @@ function insertPost(){
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
-        echo SUCESS . "a new Post is added";
+        echo SUCESS . "a new Post is added" . " " . "<a href='posts.php'>View Posts</a>";
     }
 }
 
@@ -383,7 +398,7 @@ function updatePost(){
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
-        echo SUCESS . "the Post is updated";
+        echo SUCESS . "the Post is updated" . " " . "<a href='posts.php'>View Posts</a>";
     }
 }
 

@@ -8,6 +8,7 @@ queryAllComments();
 queyAllUsers();
 queryCountCategories();
 queryDraftPosts();
+queryPublishedPosts();
 queryPendingComments();
 
 ?>
@@ -22,7 +23,7 @@ queryPendingComments();
                         <i class="fa fa-file-text fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
-                  <div class='huge'><?php echo $countPosts; ?></div>
+                  <div class='huge'><?php echo $countAllPosts; ?></div>
                         <div>Posts</div>
                     </div>
                 </div>
@@ -115,10 +116,10 @@ queryPendingComments();
 
           <?php
 
-            $element_text = ['Active Posts', 'Draft Post', 'Comments', 'Pending Comments', 'Users', 'Subscribers', 'Categories'];
-            $element_count = [$countPosts, $countDraftPosts, $countAllComments, $countPendingComments, $countAllUsers, $countSubscribers, $countCountCategories];
+            $element_text = ['All Posts', 'Published Post', 'Draft Post', 'Comments', 'Pending Comments', 'Users', 'Subscribers', 'Categories'];
+            $element_count = [$countAllPosts, $countPublishedPosts, $countDraftPosts, $countAllComments, $countPendingComments, $countAllUsers, $countSubscribers, $countCountCategories];
 
-            for ($i=0; $i < 7 ; $i++) {
+            for ($i=0; $i < 8 ; $i++) {
               echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
             }
 
