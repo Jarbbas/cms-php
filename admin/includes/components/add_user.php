@@ -25,7 +25,7 @@ if (isset($_POST['create_user'])) {
             <label for="post_title">User Last Name</label>
             <input type="text" class="form-control" name="user_lastname">
         </div>
-        <div class="form-group">user_lastname
+        <div class="form-group">
             <label for="post_title">User email</label>
             <input type="email" class="form-control" name="user_email">
         </div>
