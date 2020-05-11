@@ -56,5 +56,6 @@ if(isset($_GET['update'])) {
     Updatecomment();
 }
 ?>
+
 </tbody>
 </table>
