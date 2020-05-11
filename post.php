@@ -55,7 +55,13 @@
 <?php
 
     if(isset($_POST['create_comment'])) {
-      createComment();
+
+        if (!empty($comment_author) && !empty($comment_email) && !empty($comment_content) ) {
+            createComment();
+        } else {
+            echo "<script>alert('Fields cannot be empty!')</script>";
+        }
+
     }
 
  ?>
