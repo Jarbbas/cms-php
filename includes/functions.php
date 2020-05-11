@@ -347,7 +347,7 @@ function insertPost(){
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
-        echo SUCESS . "a new Post is added" . " " . "<a href='posts.php'>View Posts</a>";
+        echo SUCESS . "<p class='bg-success'>New Post was created <a href='posts.php'>View Posts</a>";
     }
 }
 
@@ -398,7 +398,7 @@ function updatePost(){
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
-        echo SUCESS . "the Post is updated" . " " . "<a href='posts.php'>View Posts</a>";
+        echo SUCESS . "<p class='bg-success'>The Post was updated. <a href='../post.php?post_id={$post_id}'> View Post</a> or <a href='posts.php'> View ALL Post</a></p>";
     }
 }
 
@@ -575,7 +575,7 @@ function deletePost() {
 function queryAllComments() {
 
   global $connection;
-  global $result;
+  global $resultAllComments;
   global $countAllComments;
 
   $query = "SELECT * FROM `comments` ";
