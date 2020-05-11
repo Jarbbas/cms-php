@@ -36,7 +36,7 @@
                         $post_content = substr($row['post_content'],0, 150);
 
                         if ($post_status !== 'published') {
-                          echo "<h1>No more posts available</h1>";
+                          // echo "<h1>No more posts available</h1>";
 
                         } else {
 
