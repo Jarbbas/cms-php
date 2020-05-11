@@ -347,7 +347,8 @@ function insertPost(){
     if (!$result) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
-        echo SUCESS . "<p class='bg-success'>New Post was created <a href='posts.php'>View Posts</a>";
+        $the_post_id = mysqli_insert_id($connection);
+        echo SUCESS . "<p class='bg-success'>Post was Created. <a href='../post.php?post_id={$the_post_id}'> View Post</a> or <a href='posts.php?source=edit&post_id={$the_post_id}'> Edit Post</a></p>";
     }
 }
 
@@ -404,7 +405,7 @@ function updatePost(){
 
 function deletePost() {
 
-    global $connection;function deletePost() {
+    global $connection;
 
     global $connection;
     global $result;
@@ -421,19 +422,34 @@ function deletePost() {
     }
 
 }
-    global $result;
 
-    $post_id =$_GET['delete'];
+function bulkOptions($checkBoxValue) {
 
-    $query = "DELETE FROM `posts` WHERE `post_id` = '{$post_id}' ";
-    $result = mysqli_query($connection, $query);
+    global $connection;
+    global $resultBulkOptions;
 
-    if (!$result) {
+     $bulk_options = $_POST['bulkOptions'];
+     $postValueId = $checkBoxValue;
+
+      switch ($bulk_options) {
+          case 'published':
+              $query = "UPDATE `posts` SET `post_status` = '{$bulk_options}' WHERE `post_id` = {$postValueId} ";
+              $resultBulkOptions = mysqli_query($connection, $query);
+          break;
+          case 'draft':
+              $query = "UPDATE `posts` SET `post_status` = '{$bulk_options}' WHERE `post_id` = {$postValueId} ";
+              $resultBulkOptions = mysqli_query($connection, $query);
+          break;
+          case 'delete':
+              $query = "DELETE FROM `posts` WHERE `post_id` = '{$postValueId}' ";
+              $resultBulkOptions = mysqli_query($connection, $query);
+          break;
+
+  }
+
+    if (!$resultBulkOptions) {
         die('Query' . FAIL . mysqli_error($connection));
-    } else {
-        header("Location: posts.php");
     }
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
