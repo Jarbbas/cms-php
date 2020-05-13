@@ -1,3 +1,7 @@
+<?php
+    ob_start();
+
+?>
 <div class="col-md-4">
 
                 <!-- Blog Search Well -->
@@ -30,6 +34,19 @@
                     </form>
                     <!-- /.input-group -->
                 </div>
+<?php
+
+if (isset($_SESSION['first_name'])) {
+?>
+                <div class='well'>
+                   <h3>Welcome</h3>
+                   <smal><?php echo $_SESSION['first_name']?></smal>
+                   <span class='input-group-btn'>
+                       <a style="margin-top: 1em;" href="logout.php" class='btn btn-primary'>Log out</a>
+                   </span>
+                </div>
+
+<?php } else { ?>
 
                 <div class='well'>
                    <h4>Login</h4>
@@ -49,6 +66,7 @@
                    </form>
                    <!-- /.input-group -->
                 </div>
+<?php } ?>
 
                 <!-- Blog Categories Well -->
                 <div class="well">

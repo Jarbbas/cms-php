@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-
+    ob_start();
+    //sesstion method start
+    session_start();
     //root paths to components and DB
     $path_to_functions = $_SERVER['DOCUMENT_ROOT'];
     $path_to_functions .= "/cms-php/includes/functions.php";

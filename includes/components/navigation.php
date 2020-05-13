@@ -21,14 +21,20 @@
                     if (!$resultAllCategories) {
                         die('query failed ' . mysqli_error($connection));
                             } else {
-                            while ($row = mysqli_fetch_assoc($resultAllCategories)) {                            
+                            while ($row = mysqli_fetch_assoc($resultAllCategories)) {
                             $cat_title = $row['cat_title'];
                             echo "<li><a href='#'>{$cat_title}</a></li>";
                             }
                         }
+
+                          if ($_SESSION['user_role'] == "administrator") {
+                          echo "<li><a href='admin'>CMS Admin Page</a></li>";
+                        } else {
+                          echo "";
+                        }
+
                   ?>
-                  <li><a href="admin">CMS Admin Page</a></li>
-                </ul>
+              </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
