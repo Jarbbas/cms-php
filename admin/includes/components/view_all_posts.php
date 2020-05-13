@@ -17,7 +17,8 @@
         <option value="">Select Options</option>
         <option value="published">Publish</option>
         <option value="draft">Draft</option>
-          <option value="delete">Delete</option>
+        <option value="delete">Delete</option>
+        <option value="clone">Clone</option>
     </select>
   </div>
 
@@ -35,7 +36,7 @@
            <th>Title</th>
            <th>Category</th>
            <th>Status</th>
-           <th>Ima/form>ge</th>
+           <th>Image</th>
            <th>Tags</th>
            <th>Comments</th>
            <th>Date</th>
