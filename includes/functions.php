@@ -287,7 +287,7 @@ function queryPublishedPosts() {
     global $resultAllPosts;
     global $countAllPosts;
 
-    $query = "SELECT * FROM `posts` ";
+    $query = "SELECT * FROM `posts` ORDER BY `post_id` DESC";
     $resultAllPosts = mysqli_query($connection, $query);
     $countAllPosts = mysqli_num_rows($resultAllPosts);
 
@@ -312,7 +312,23 @@ function queryPublishedPosts() {
         if (!$result) {
             die('Query' . FAIL . mysqli_error($connection));
             }
+    }
 
+    function querySearchPostsByAuthor() {
+
+        global $connection;
+        global $resultPostsByAuthor;
+        global $countPostsByAuthor;
+
+        $author = $_GET['author'];
+
+        $query = "SELECT * FROM `posts` WHERE `post_author` = '$author' ";
+        $resultPostsByAuthor = mysqli_query($connection, $query);
+        $countPostsByAuthor = mysqli_num_rows($resultPostsByAuthor);
+
+        if (!$resultPostsByAuthor) {
+            die('Query' . FAIL . mysqli_error($connection));
+            }
     }
 
     function queryPostsByCategory() {
@@ -331,18 +347,17 @@ function queryPublishedPosts() {
 
     }
 
-    function searchPostById() {
+    function searchPostById($postValueId) {
 
         global $connection;
-        global $result;
-
-        $post_id = $_GET['post_id'];
+        global $resultPostById;
+        $post_id = $postValueId;
 
         $query = "SELECT * FROM `posts` WHERE `post_id` = {$post_id} ";
-        $result = mysqli_query($connection, $query);
+        $resultPostById = mysqli_query($connection, $query);
 
 
-        if (!$result) {
+        if (!$resultPostById) {
             die('Query' . FAIL . mysqli_error($connection));
             }
 
@@ -400,56 +415,21 @@ function insertPost(){
     }
 }
 
-function updatePost(){
+function updatePostViewCount(){
 
     global $connection;
-    global $result;
+    global $resultupdatePostViewCount;
 
     $post_id = $_GET['post_id'];
-    $post_title = $_POST['post_title'];
-    $post_category_id = $_POST['post_category'];
-    $post_author = $_POST['post_author'];
-    $post_status = $_POST['post_status'];
-    $post_tags = $_POST['post_tags'];
-    $post_content = $_POST['post_content'];
-    $post_image = $_FILES['post_image']['name'];
-    $post_image_tmp = $_FILES['post_image']['tmp_name'];
 
-    move_uploaded_file($post_image_tmp, "../includes/images/$post_image");
+    $query = "UPDATE `posts` SET `post_views_count` = post_views_count + 1 WHERE `post_id` = '{$post_id}' ";
+    $resultupdatePostViewCount = mysqli_query($connection, $query);
 
-        if(empty($post_image)) {
-        $query = "SELECT * FROM `posts` WHERE `post_id` = '{$post_id}' ";
-        $result = mysqli_query($connection, $query);
-        while ($row = mysqli_fetch_assoc($result)) {
-                $post_image = $row['post_image'];
-        }
-    }
-    // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
-    // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
-    $post_title = mysqli_real_escape_string($connection, $post_title);
-    $post_tags = mysqli_real_escape_string($connection, $post_tags);
-    $post_author = mysqli_real_escape_string($connection, $post_author);
-    $post_status = mysqli_real_escape_string($connection, $post_status);
-    $post_content = mysqli_real_escape_string($connection, $post_content);
-
-    $query = "UPDATE `posts` SET ";
-    $query .= "`post_category_id` = '{$post_category_id}', ";
-    $query .= "`post_title` = '{$post_title}', ";
-    $query .= "`post_author` = '{$post_author}', ";
-    $query .= "`post_image` = '{$post_image}', ";
-    $query .= "`post_date` = now(), ";
-    $query .= "`post_content` = '{$post_content}', ";
-    $query .= "`post_tags` = '{$post_tags}', ";
-    $query .= "`post_status` = '{$post_status}' ";
-    $query .= "WHERE `post_id` = '{$post_id}' ";
-    $result = mysqli_query($connection, $query);
-
-    if (!$result) {
+    if (!$resultupdatePostViewCount) {
         die('Query' . FAIL . mysqli_error($connection));
-    } else {
-        echo SUCESS . "<p class='bg-success'>The Post was updated. <a href='../post.php?post_id={$post_id}'> View Post</a> or <a href='posts.php'> View ALL Post</a></p>";
     }
 }
+
 
 function deletePost() {
 
@@ -475,6 +455,7 @@ function bulkOptions($checkBoxValue) {
 
     global $connection;
     global $resultBulkOptions;
+    global $resultPostById;
 
      $bulk_options = $_POST['bulkOptions'];
      $postValueId = $checkBoxValue;
@@ -492,7 +473,40 @@ function bulkOptions($checkBoxValue) {
               $query = "DELETE FROM `posts` WHERE `post_id` = '{$postValueId}' ";
               $resultBulkOptions = mysqli_query($connection, $query);
           break;
+          case 'clone':
+            searchPostById($postValueId);
 
+            while ($row = mysqli_fetch_assoc($resultPostById)) {
+
+              $post_id = $row['post_id'];
+              $post_author = $row['post_author'];
+              $post_title = $row['post_title'];
+              $post_category_id = $row['post_category_id'];
+              $post_status = $row['post_status'];
+              $post_image = $row['post_image'];
+              $post_tags = $row['post_tags'];
+              $post_content = $row['post_content'];
+
+              $query = "INSERT INTO `posts` ";
+              $query .= "(`post_category_id`, ";
+              $query .= "`post_title`, ";
+              $query .= "`post_author`, ";
+              $query .= "`post_date`, ";
+              $query .= "`post_image`, ";
+              $query .= "`post_content`, ";
+              $query .= "`post_tags`, ";
+              $query .= "`post_status`) ";
+              $query .= "VALUES('{$post_category_id}', ";
+              $query .= "'{$post_title}', ";
+              $query .= "'{$post_author}', ";
+              $query .= "now(), ";
+              $query .= "'{$post_image}', ";
+              $query .= "'{$post_content}', ";
+              $query .= "'{$post_tags}', ";
+              $query .= "'{$post_status}')";
+              $resultBulkOptions = mysqli_query($connection, $query);
+            }
+          break;
   }
 
     if (!$resultBulkOptions) {
@@ -545,9 +559,6 @@ function bulkOptions($checkBoxValue) {
         $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
         $resultselectCategories = mysqli_query($connection, $query);
 
-        // while ($row = mysqli_fetch_assoc($resultselectCategories)) {
-        //     $category_name = $row['cat_title'];
-        // }
         if (!$resultselectCategories) {
             die('Query' . FAIL . mysqli_error($connection));
             }
