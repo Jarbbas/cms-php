@@ -18,8 +18,17 @@
 
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-
-            <?php
+              <h1 class='page-header'>
+                    Welcome
+<?php
+    if (isset($_SESSION['first_name'])) {
+    echo "<small>{$_SESSION['first_name']}</small>";
+  } else {
+    echo "<small>Reader</small>";
+  }
+?>
+              </h1>
+<?php
 
             queryAllPosts();
 
@@ -40,15 +49,12 @@
 
                         } else {
 
-                        echo " <h1 class='page-header'>
-                                Page Heading
-                                <small>Secondary Text</small>
-                                </h1>
-                        <!-- First Blog Post -->
+
+                      echo " <!-- First Blog Post -->
                                 <h2>
                                     <a href='post.php?post_id={$post_id}'>{$post_title}</a>
                                 </h2>
-                                <p class='lead'>by <a href='index.php'>Start Bootstrap</a></p>
+                                <p class='lead'>by <a href='author_post.php?author={$post_author}&post_id={$post_id}'>{$post_author}</a></p>
                                 <p><span class='glyphicon glyphicon-time'></span> Posted on {$post_date}</p>
                                 <hr>
                                 <a href='post.php?post_id={$post_id}'>
