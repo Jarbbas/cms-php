@@ -3,7 +3,6 @@
        <tr>
            <th>user_id</th>
            <th>username</th>
-           <th>user_password</th>
            <th>user_fristname</th>
            <th>user_lastname</th>
            <th>user_email </th>
@@ -31,16 +30,14 @@ while ($row = mysqli_fetch_assoc($resultAllUsers)) {
     echo "<tr>
     <td>{$user_id}</td>
     <td>{$username}</td>
-    <td>{$user_password}</td>
     <td>{$user_fristname}</td>
     <td>{$user_lastname}</td>
     <td>{$user_email}</td>
     <td><img width='100' src='../includes/images/{$user_image}'</img></td>
     <td>{$user_role}</td>
     <td><a href='users.php?source=edit&user_id={$user_id}'>Edit</a></td>
-    <td><a href='users.php?delete={$user_id}'>Delete</a></td>
+    <td><a onClick=\" javascript: return confirm('Are you sure you want to Delete ?'); \" href='users.php?delete={$user_id}'>Delete</a></td>
     </tr>";
-
 
 }
 

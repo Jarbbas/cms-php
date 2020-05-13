@@ -59,7 +59,6 @@ while ($row = mysqli_fetch_assoc($resultAllPosts)) {
         $post_comment_count = $row['post_comment_count'];
         $post_date = $row['post_date'];
 
-
     ?>
       <tr>
       <td><input type="checkbox" class="checkBoxes" name="checkBoxesArray[]" value="<?php echo $post_id; ?>"></td>
@@ -92,7 +91,7 @@ while ($row = mysqli_fetch_assoc($resultAllPosts)) {
     <td>{$post_comment_count}</td>
     <td>{$post_date}</td>
     <td><a href='posts.php?source=edit&post_id={$post_id}'>Edit</a></td>
-    <td><a href='posts.php?delete={$post_id}'>Delete</a></td>
+    <td><a onClick=\" javascript: return confirm('Are you sure you want to Delete ?'); \" href='posts.php?delete={$post_id}'>Delete</a></td>
     </tr>";
 
 }
