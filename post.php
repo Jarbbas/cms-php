@@ -20,13 +20,17 @@
             <div class="col-md-8">
 
             <?php
+      if (isset($_GET['post_id'])) {
 
-            searchPostById();
+            $postValueId = $_GET['post_id'];
 
-            if (!$result) {
+            updatePostViewCount();
+            searchPostById($postValueId);
+
+            if (!$resultPostById) {
                 die('query failed ' . mysqli_error($connection));
                 } else {
-                        while ($row = mysqli_fetch_assoc($result)) {
+                        while ($row = mysqli_fetch_assoc($resultPostById)) {
                         $post_title = $row['post_title'];
                         $post_author = $row['post_author'];
                         $post_date = $row['post_date'];
@@ -34,13 +38,9 @@
                         $post_content = $row['post_content'];
 
                         echo " <h1 class='page-header'>
-                                Page Heading
-                                <small>Secondary Text</small>
-                                </h1>
+                                {$post_title}
+                              </h1>
                         <!-- First Blog Post -->
-                                <h2>
-                                    <a href='#'>{$post_title}</a>
-                                </h2>
                                 <p class='lead'>by <a href='index.php'>Start Bootstrap</a></p>
                                 <p><span class='glyphicon glyphicon-time'></span> Posted on {$post_date}</p>
                                 <hr>
@@ -115,6 +115,9 @@
               </div>
 <?php
     }
+  } else {
+     header("Location: index.php");
+  }
  ?>
       </div>
 
