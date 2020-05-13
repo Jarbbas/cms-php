@@ -1,15 +1,29 @@
-<?php  include "includes/db.php"; ?>
- <?php  include "includes/header.php"; ?>
+<?php
+
+$path_to_header = $_SERVER['DOCUMENT_ROOT'];
+$path_to_header .= "/cms-php/includes/components/header.php";
+
+// <!-- Header component -->
+include_once($path_to_header);
 
 
-    <!-- Navigation -->
-    
-    <?php  include "includes/navigation.php"; ?>
-    
- 
+  if (isset($_POST['submit'])) {
+
+    if (!empty($_POST['username']) && !empty($_POST['user_password']) && !empty($_POST['user_email'])) {
+         userRegistration();
+    } else {
+        echo "<script>alert('Fields cannot be empty!')</script>";
+    }
+
+  }
+
+// <!-- Navigation component-->
+include_once($path_to_navigation);
+?>
+
     <!-- Page Content -->
     <div class="container">
-    
+
 <section id="login">
     <div class="container">
         <div class="row">
@@ -23,16 +37,16 @@
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com">
+                            <input type="email" name="user_email" id="email" class="form-control" placeholder="somebody@example.com">
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
-                            <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                            <input type="password" name="user_password" id="key" class="form-control" placeholder="Password">
                         </div>
-                
-                        <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+
+                        <input type="submit" name="submit" id="btn-login" class="btn btn-success btn-lg btn-block" value="Register">
                     </form>
-                 
+
                 </div>
             </div> <!-- /.col-xs-12 -->
         </div> <!-- /.row -->
@@ -44,4 +58,4 @@
 
 
 
-<?php include "includes/footer.php";?>
+<?php include_once($path_to_footer);?>

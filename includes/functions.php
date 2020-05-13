@@ -1,4 +1,45 @@
 <?php
+function userRegistration() {
+
+    global $connection;
+    global $resultRegistration;
+
+    $username = $_POST['username'];
+    $user_password = $_POST['user_password'];
+    $user_email = $_POST['user_email'];
+    $user_role = "subscriber";
+
+    // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+    // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+    $username = mysqli_real_escape_string($connection, $username);
+    $user_password = mysqli_real_escape_string($connection, $user_password);
+    $user_email = mysqli_real_escape_string($connection, $user_email);
+
+    $queryRandSalt = "SELECT `randSalt` FROM `users` ";
+    $resultRandSalt = mysqli_query($connection, $queryRandSalt);
+    $row = mysqli_fetch_array($resultRandSalt);
+    $randSaltpassword = $row['randSalt'];
+
+    $user_password = crypt($user_password, $randSaltpassword);
+
+    $query = "INSERT INTO `users` ";
+    $query .= "(`username`, ";
+    $query .= "`user_password`, ";
+    $query .= "`user_email`, ";
+    $query .= "`user_role`) ";
+    $query .= "VALUES('{$username}', ";
+    $query .= "'{$user_password}', ";
+    $query .= "'{$user_email}', ";
+    $query .= "'{$user_role}') ";
+    $resultRegistration = mysqli_query($connection, $query);
+
+    if (!$resultRegistration) {
+        die('Query' . FAIL . mysqli_error($connection));
+    } else {
+        echo "<p class='bg-success'>" . SUCESS . "thanks for your registration</p>";
+    }
+}
+
 
 function userValidationLogin() {
 
@@ -9,7 +50,7 @@ function userValidationLogin() {
   $password = $_POST['password'];
 
   $username = mysqli_real_escape_string($connection, $username);
-  $user_password = mysqli_real_escape_string($connection, $password);
+  // $user_password = mysqli_real_escape_string($connection, $password);
 
   $query = "SELECT * FROM `users` WHERE `username` = '{$username}' ";
   $resultLoginUser = mysqli_query($connection, $query);
@@ -163,6 +204,13 @@ function queyAllUsers() {
       $user_fristname = mysqli_real_escape_string($connection, $user_fristname);
       $user_lastname = mysqli_real_escape_string($connection, $user_lastname);
       $user_email = mysqli_real_escape_string($connection, $user_email);
+
+      $queryRandSalt = "SELECT `randSalt` FROM `users` ";
+      $resultRandSalt = mysqli_query($connection, $queryRandSalt);
+      $row = mysqli_fetch_array($resultRandSalt);
+      $randSaltpassword = $row['randSalt'];
+
+      $user_password = crypt($user_password, $randSaltpassword);
 
       $query = "UPDATE `users` SET ";
       $query .= "`username` = '{$username}', ";
