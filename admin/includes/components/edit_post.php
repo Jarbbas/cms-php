@@ -5,10 +5,10 @@ if (isset($_POST['edit_post'])) {
     updatePost();
 
 }
-
+$postValueId = $_GET['post_id'];
 searchPostById();
 
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($resultPostById)) {
     $post_id = $row['post_id'];
     $post_author = $row['post_author'];
     $post_title = $row['post_title'];
