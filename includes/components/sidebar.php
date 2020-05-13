@@ -40,10 +40,12 @@
                    <div class='input-group'>
                        <input name='password' type='password' class='form-control' placeholder="password">
                        <span class='input-group-btn'>
-                           <button name='login' class='btn btn-primary' type='submit'>Enter
-                       </button>
+                           <button name='login' class='btn btn-primary' type='submit'>Enter</button>
                        </span>
                    </div>
+                   <span class='input-group-btn'>
+                       <a style="margin-top: 1em;" href="registration.php" class='btn btn-success'>Register</a>
+                   </span>
                    </form>
                    <!-- /.input-group -->
                 </div>
