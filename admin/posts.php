@@ -20,8 +20,8 @@
     <div class="col-lg-12">
 
     <h1 class="page-header">
-    View all Post Page
-    <small>Author</small>
+    Posts
+    <small><?php echo $_SESSION['user_role']?> page</small>
     </h1>
 
 
