@@ -21,7 +21,7 @@
 
     <h1 class="page-header">
       Profile Page
-    <small><?php echo $_SESSION['first_name']; echo " "; echo $_SESSION['user_lastname']; ?></small>
+    <small><?php echo "{$_SESSION['first_name']}" . " " . "{$_SESSION['user_lastname']}"; ?></small>
     </h1>
 
 <?php
