@@ -29,13 +29,29 @@
 ?>
               </h1>
 <?php
+        $per_page = 5;
+
+        if (isset($_GET['page'])) {
+           $page = $_GET['page'];
+        } else {
+          $page ="";
+        }
+
+        if ($page = "" || $page == 1) {
+          $page_1 = 0;
+        } else {
+          $page_1 = ($page * $per_page) - $per_page;
+        }
+
 
             queryAllPosts();
+            $countPages = ceil($countAllPosts / $per_page);
 
-            if (!$resultAllPosts) {
+            queryLimitPosts(abs($page_1));
+            if (!$resultLimitPosts) {
                 die('query failed ' . mysqli_error($connection));
                 } else {
-                        while ($row = mysqli_fetch_assoc($resultAllPosts)) {
+                        while ($row = mysqli_fetch_assoc($resultLimitPosts)) {
                         $post_id = $row['post_id'];
                         $post_title = $row['post_title'];
                         $post_author = $row['post_author'];
@@ -80,6 +96,23 @@
         <!-- /.row -->
 
         <hr>
+
+          <ul class="pager">
+            <?php
+
+              for ($i=1; $i < $countPages; $i++) {
+
+                if ($i == $page) {
+                    echo "<li><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
+                } else {
+                    echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";
+                }
+            }
+
+            ?>
+          </ul>
+
+
 
         <!-- Footer component-->
 <?php
