@@ -39,6 +39,7 @@
            <th>Image</th>
            <th>Tags</th>
            <th>Comments</th>
+           <th>Visualizations</th>
            <th>Date</th>
        </tr>
    </thead>
@@ -59,6 +60,7 @@ while ($row = mysqli_fetch_assoc($resultAllPosts)) {
         $post_tags = $row['post_tags'];
         $post_comment_count = $row['post_comment_count'];
         $post_date = $row['post_date'];
+        $post_views_count = $row['post_views_count'];
 
     ?>
       <tr>
@@ -90,6 +92,7 @@ while ($row = mysqli_fetch_assoc($resultAllPosts)) {
     <td><img width='100' src='../includes/images/{$post_image}'</img></td>
     <td>{$post_tags}</td>
     <td>{$post_comment_count}</td>
+    <td>{$post_views_count}</td>
     <td>{$post_date}</td>
     <td><a href='posts.php?source=edit&post_id={$post_id}'>Edit</a></td>
     <td><a onClick=\" javascript: return confirm('Are you sure you want to Delete ?'); \" href='posts.php?delete={$post_id}'>Delete</a></td>
