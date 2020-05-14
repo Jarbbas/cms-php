@@ -116,7 +116,7 @@ function queyAllUsers() {
           }
 
   }
-  //CRUD FUNCTIONS FOR POST
+  //CRUD FUNCTIONS FOR USERS
   function insertUser(){
 
       global $connection;
@@ -294,8 +294,24 @@ function queryPublishedPosts() {
     if (!$resultAllPosts) {
         die('Query' . FAIL . mysqli_error($connection));
         }
-
     }
+
+    function queryLimitPosts($page_1) {
+
+      global $connection;
+      global $resultLimitPosts;
+      global $countLimitPosts;
+
+      $pageNumber = $page_1;
+
+      $query = "SELECT * FROM `posts` ORDER BY `post_id` DESC LIMIT $pageNumber, 5";
+      $resultLimitPosts = mysqli_query($connection, $query);
+      $countLimitPosts = mysqli_num_rows($resultLimitPosts);
+
+      if (!$resultLimitPosts) {
+          die('Query' . FAIL . mysqli_error($connection));
+          }
+      }
 
     function querySearchPosts() {
 
