@@ -26,10 +26,9 @@
                             echo "<li><a href='#'>{$cat_title}</a></li>";
                             }
                         }
-
-                          if ($_SESSION['user_role'] == "administrator") {
-                          echo "<li><a href='admin'>CMS Admin Page</a></li>";
-                        } else {
+                          if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == "administrator") {
+                            echo "<li><a href='admin'>CMS Admin Page</a></li>";
+                          } else {
                           echo "";
                         }
 
