@@ -5,6 +5,8 @@ function userRegistration() {
     global $resultRegistration;
 
     $username = $_POST['username'];
+    $user_fristname = $_POST['user_fristname'];
+    $user_lastname = $_POST['user_lastname'];
     $user_password = $_POST['user_password'];
     $user_email = $_POST['user_email'];
     $user_role = "subscriber";
@@ -12,8 +14,11 @@ function userRegistration() {
     // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
     // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
     $username = mysqli_real_escape_string($connection, $username);
+    $user_fristname = mysqli_real_escape_string($connection, $user_fristname);
+    $user_lastname = mysqli_real_escape_string($connection, $user_lastname);
     $user_password = mysqli_real_escape_string($connection, $user_password);
     $user_email = mysqli_real_escape_string($connection, $user_email);
+
 
     $queryRandSalt = "SELECT `randSalt` FROM `users` ";
     $resultRandSalt = mysqli_query($connection, $queryRandSalt);
@@ -24,10 +29,14 @@ function userRegistration() {
 
     $query = "INSERT INTO `users` ";
     $query .= "(`username`, ";
+    $query .= "`user_fristname`, ";
+    $query .= "`user_lastname`, ";
     $query .= "`user_password`, ";
     $query .= "`user_email`, ";
     $query .= "`user_role`) ";
     $query .= "VALUES('{$username}', ";
+    $query .= "'{$user_fristname}', ";
+    $query .= "'{$user_lastname}', ";
     $query .= "'{$user_password}', ";
     $query .= "'{$user_email}', ";
     $query .= "'{$user_role}') ";
@@ -36,7 +45,7 @@ function userRegistration() {
     if (!$resultRegistration) {
         die('Query' . FAIL . mysqli_error($connection));
     } else {
-        echo "<p class='bg-success'>" . SUCESS . "thanks for your registration</p>";
+        echo "<script>alert('thank you\nfor your registration\nGo back and try log in')</script>";
     }
 }
 
@@ -205,23 +214,39 @@ function queyAllUsers() {
       $user_lastname = mysqli_real_escape_string($connection, $user_lastname);
       $user_email = mysqli_real_escape_string($connection, $user_email);
 
-      $queryRandSalt = "SELECT `randSalt` FROM `users` ";
-      $resultRandSalt = mysqli_query($connection, $queryRandSalt);
-      $row = mysqli_fetch_array($resultRandSalt);
+      $querycheckUser = "SELECT * FROM `users` ";
+      $resultcheckUser = mysqli_query($connection, $querycheckUser);
+      $row = mysqli_fetch_array($resultcheckUser);
       $randSaltpassword = $row['randSalt'];
+      $userPasswordValidation = $row['user_password'];
 
-      $user_password = crypt($user_password, $randSaltpassword);
+      if ($user_password === $userPasswordValidation) {
 
-      $query = "UPDATE `users` SET ";
-      $query .= "`username` = '{$username}', ";
-      $query .= "`user_password` = '{$user_password}', ";
-      $query .= "`user_fristname` = '{$user_fristname}', ";
-      $query .= "`user_lastname` = '{$user_lastname}', ";
-      $query .= "`user_email` = '{$user_email}', ";
-      $query .= "`user_image` = '{$user_image}', ";
-      $query .= "`user_role` = '{$user_role}' ";
-      $query .= "WHERE `user_id` = '{$user_id}' ";
-      $result = mysqli_query($connection, $query);
+        $query = "UPDATE `users` SET ";
+        $query .= "`username` = '{$username}', ";
+        $query .= "`user_fristname` = '{$user_fristname}', ";
+        $query .= "`user_lastname` = '{$user_lastname}', ";
+        $query .= "`user_email` = '{$user_email}', ";
+        $query .= "`user_image` = '{$user_image}', ";
+        $query .= "`user_role` = '{$user_role}' ";
+        $query .= "WHERE `user_id` = '{$user_id}' ";
+        $result = mysqli_query($connection, $query);
+
+      } else {
+
+        $user_password = crypt($user_password, $randSaltpassword);
+        $query = "UPDATE `users` SET ";
+        $query .= "`username` = '{$username}', ";
+        $query .= "`user_password` = '{$user_password}', ";
+        $query .= "`user_fristname` = '{$user_fristname}', ";
+        $query .= "`user_lastname` = '{$user_lastname}', ";
+        $query .= "`user_email` = '{$user_email}', ";
+        $query .= "`user_image` = '{$user_image}', ";
+        $query .= "`user_role` = '{$user_role}' ";
+        $query .= "WHERE `user_id` = '{$user_id}' ";
+        $result = mysqli_query($connection, $query);
+
+      }
 
       if (!$result) {
           die('Query' . FAIL . mysqli_error($connection));
@@ -304,7 +329,7 @@ function queryPublishedPosts() {
 
       $pageNumber = $page_1;
 
-      $query = "SELECT * FROM `posts` ORDER BY `post_id` DESC LIMIT $pageNumber, 5";
+      $query = "SELECT * FROM `posts` ORDER BY `post_id` DESC LIMIT $pageNumber";
       $resultLimitPosts = mysqli_query($connection, $query);
       $countLimitPosts = mysqli_num_rows($resultLimitPosts);
 
