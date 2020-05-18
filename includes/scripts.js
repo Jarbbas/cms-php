@@ -1,7 +1,5 @@
 $(document).ready(function(){
-
  //EDITOR CODE
-
 ClassicEditor
   .create( document.querySelector( '#body' ) )
   .catch( error => {
@@ -23,33 +21,20 @@ if (this.checked) {
 
   $('.checkBoxes').each(function(){
 
-<<<<<<< Updated upstream
           this.checked = false;
-        });
+        });users_online();
     }
-users_online();
-} );
 
-
-
-
-function loadUsersOnline() {
-      $.get("functions.php?onlineusers=result", function(data){
-          $(".useresonline").text(data);
-      });
-}
-
-setInterval(function() {
-  loadUsersOnline();
-},500);
-
-=======
-    this.checked = false;
-  });
-}
-
-} );
-
-
->>>>>>> Stashed changes
 });
+
+});
+
+ function loadUsersOnline () {
+  $.get("/cms-php/includes/functions.php?onlineusers=result", function(data){
+        $(".useresonline").text(data);
+      });
+  }
+
+  setInterval(function() {
+    loadUsersOnline();
+  },500);

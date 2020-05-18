@@ -8,7 +8,7 @@
 
     // <!-- Navigation component-->
     include_once($path_to_navigation);
-
+  
 ?>
 
     <!-- Page Content -->

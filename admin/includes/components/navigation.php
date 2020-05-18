@@ -12,9 +12,8 @@
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
 
-                <li><a>Users Online method 1: <?php echo users_online(); ?></a></li>
-
-                <li><a href="#">Users Online method 2: <span class="useresonline"></span></a></li>
+                <!-- <li><a href="#">Users Online: <span ><?php //echo users_online(); ?></span></a></li> -->
+                <li><a href="#">Users Online: <span class="useresonline"></span></a></li>
                 <li><a href="../index.php">Home Page</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $_SESSION['first_name']; echo " "; echo $_SESSION['last_name']; ?> <b class="caret"></b></a>

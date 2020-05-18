@@ -15,7 +15,7 @@ will silently discard the buffer contents.*/
   $path_to_functions .= "/cms-php/includes/functions.php";
   $path_to_messages = $_SERVER['DOCUMENT_ROOT'];
   $path_to_messages .= "/cms-php/includes/messages.php";
-  
+
   $path_to_navigation_admin = $_SERVER['DOCUMENT_ROOT'];
   $path_to_navigation_admin .= "/cms-php/admin/includes/components/navigation.php";
   $path_to_footer_admin = $_SERVER['DOCUMENT_ROOT'];
@@ -26,6 +26,7 @@ will silently discard the buffer contents.*/
   include_once($path_to_db);
   include_once($path_to_functions);
   include_once($path_to_messages);
+
 
 if (!isset($_SESSION['user_role'])) {
 
@@ -62,8 +63,10 @@ if (!isset($_SESSION['user_role'])) {
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/19.0.0/classic/ckeditor.js"></script>
+    <script src="/cms-php/includes/scripts.js"></script>
 </head>
 
 <body>
