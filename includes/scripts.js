@@ -1,28 +1,29 @@
 $(document).ready(function(){
 
-    //EDITOR CODE
+ //EDITOR CODE
 
 ClassicEditor
-        .create( document.querySelector( '#body' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+  .create( document.querySelector( '#body' ) )
+  .catch( error => {
+      console.error( error );
+  } );
 
-      //REST OF THE CODE
+//REST OF THE CODE
 
 $('#selectAllBoxes').click(function(event){
 
-    if (this.checked) {
-        $('.checkBoxes').each(function() {
+if (this.checked) {
+  $('.checkBoxes').each(function() {
 
-          this.checked = true;
+    this.checked = true;
 
-        });
+  });
 
-    } else {
+} else {
 
-        $('.checkBoxes').each(function(){
+  $('.checkBoxes').each(function(){
 
+<<<<<<< Updated upstream
           this.checked = false;
         });
     }
@@ -42,4 +43,13 @@ setInterval(function() {
   loadUsersOnline();
 },500);
 
+=======
+    this.checked = false;
+  });
+}
+
+} );
+
+
+>>>>>>> Stashed changes
 });
