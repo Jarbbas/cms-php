@@ -42,6 +42,8 @@
     $_SESSION['user_role'] = $db_user_role;
     $_SESSION['user_id'] = $db_user_id;
 
+
+
         if ($_SESSION['user_role'] == "administrator") {
           header("Location: admin/");
         } else {

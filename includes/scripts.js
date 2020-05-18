@@ -26,8 +26,20 @@ $('#selectAllBoxes').click(function(event){
           this.checked = false;
         });
     }
-
+users_online();
 } );
 
 
-} );
+
+
+function loadUsersOnline() {
+      $.get("functions.php?onlineusers=result", function(data){
+          $(".useresonline").text(data);
+      });
+}
+
+setInterval(function() {
+  loadUsersOnline();
+},500);
+
+});
