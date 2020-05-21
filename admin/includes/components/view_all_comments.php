@@ -41,7 +41,7 @@ while ($row = mysqli_fetch_assoc($resultAllComments)) {
     <td><a href='../post.php?post_id={$comment_post_id}'>{$post_title}</a></td>
     <td><a href='comments.php?update={$comment_id}&status=approved'>Approve</a></td>
     <td><a href='comments.php?update={$comment_id}&status=unapproved'>Unapprove</a></td>
-    <td><a href='comments.php?delete={$comment_id}'>Delete</a></td>
+    <td><a href='comments.php?delete={$comment_id}&post_id={$comment_post_id}'>Delete</a></td>
     </tr>";
 
 }
