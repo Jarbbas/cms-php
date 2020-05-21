@@ -8,7 +8,7 @@
 
     // <!-- Navigation component-->
     include_once($path_to_navigation);
-  
+
 ?>
 
     <!-- Page Content -->
@@ -42,7 +42,6 @@
         } else {
           $page_1 = ($page * $per_page) - $per_page;
         }
-
 
             queryAllPosts();
             $countPages = ceil($countAllPosts / $per_page);

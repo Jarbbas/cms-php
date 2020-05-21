@@ -49,6 +49,10 @@ if (isset($_GET['source'])) {
             include "includes/components/view_all_posts.php";
             break;
 
+        case 'comment':
+            include "includes/components/post_comment.php";
+            break;
+
         default:
           include "includes/components/view_all_posts.php";
             break;
