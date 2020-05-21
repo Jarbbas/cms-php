@@ -32,17 +32,19 @@
         $db_urandSalt = $row['randSalt'];
   }
 
-    $password = crypt($password, $db_user_password);
+    // $password = crypt($password, $db_user_password);
 
-  if ($username === $db_username && $password === $db_user_password) {
+  // if ($username === $db_username && $password === $db_user_password) {
 
+  if (password_verify($password, $db_user_password)) {
+    
     $_SESSION['username'] = $db_username;
     $_SESSION['first_name'] = $db_user_fristname;
     $_SESSION['last_name'] = $db_user_lastname;
     $_SESSION['user_role'] = $db_user_role;
     $_SESSION['user_id'] = $db_user_id;
 
-    
+
         if ($_SESSION['user_role'] == "administrator") {
           header("Location: admin/");
         } else {

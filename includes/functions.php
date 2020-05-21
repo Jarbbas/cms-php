@@ -51,13 +51,18 @@ function userRegistration() {
     $user_password = mysqli_real_escape_string($connection, $user_password);
     $user_email = mysqli_real_escape_string($connection, $user_email);
 
+    //New Method
 
-    $queryRandSalt = "SELECT `randSalt` FROM `users` ";
-    $resultRandSalt = mysqli_query($connection, $queryRandSalt);
-    $row = mysqli_fetch_array($resultRandSalt);
-    $randSaltpassword = $row['randSalt'];
+    $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost '=> 12));
 
-    $user_password = crypt($user_password, $randSaltpassword);
+    //Old Method, functional, but not pratical!
+
+    // $queryRandSalt = "SELECT `randSalt` FROM `users` ";
+    // $resultRandSalt = mysqli_query($connection, $queryRandSalt);
+    // $row = mysqli_fetch_array($resultRandSalt);
+    // $randSaltpassword = $row['randSalt'];
+
+    // $user_password = crypt($user_password, $randSaltpassword);
 
     $query = "INSERT INTO `users` ";
     $query .= "(`username`, ";
@@ -184,6 +189,8 @@ function queyAllUsers() {
       $user_lastname = mysqli_real_escape_string($connection, $user_lastname);
       $user_email = mysqli_real_escape_string($connection, $user_email);
 
+      $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost '=> 12));
+
       $query = "INSERT INTO `users` ";
       $query .= "(`username`, ";
       $query .= "`user_password`, ";
@@ -234,9 +241,9 @@ function queyAllUsers() {
           if(empty($user_image)) {
           $query = "SELECT * FROM `users` WHERE `user_id` = '{$user_id}' ";
           $result = mysqli_query($connection, $query);
-          while ($row = mysqli_fetch_assoc($result)) {
-                  $user_image = $row['user_image'];
-          }
+            while ($row = mysqli_fetch_assoc($result)) {
+                    $user_image = $row['user_image'];
+            }
       }
       // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
       // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
@@ -249,7 +256,7 @@ function queyAllUsers() {
       $querycheckUser = "SELECT * FROM `users` ";
       $resultcheckUser = mysqli_query($connection, $querycheckUser);
       $row = mysqli_fetch_array($resultcheckUser);
-      $randSaltpassword = $row['randSalt'];
+      // $randSaltpassword = $row['randSalt'];
       $userPasswordValidation = $row['user_password'];
 
       if ($user_password === $userPasswordValidation) {
@@ -266,7 +273,9 @@ function queyAllUsers() {
 
       } else {
 
-        $user_password = crypt($user_password, $randSaltpassword);
+        $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost '=> 12));
+        // $user_password = crypt($user_password, $randSaltpassword);
+
         $query = "UPDATE `users` SET ";
         $query .= "`username` = '{$username}', ";
         $query .= "`user_password` = '{$user_password}', ";
