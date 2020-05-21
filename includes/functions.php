@@ -825,18 +825,17 @@ function queryAllComments() {
       global $result;
 
       $comment_id = $_GET['delete'];
-      $comment_post_id = $_GET['comment_post_id'];
+      $comment_post_id = $_GET['post_id'];
 
-      $query = "DELETE FROM `comments` WHERE `comment_id` = '{$comment_id}' ";
-      $result = mysqli_query($connection, $query);
+      $query = "UPDATE `posts` SET `post_comment_count` = `post_comment_count` - 1 WHERE `post_id` = {$comment_post_id} ";
+      $resultUpdateCommentCount = mysqli_query($connection, $query);
 
-
-      if (!$result) {
+      if (!$resultUpdateCommentCount) {
           die('Query' . FAIL . mysqli_error($connection));
       } else {
-        $query2 = "UPDATE `posts` SET `post_comment_count` = `post_comment_count` - 1 WHERE `post_id` = {$comment_post_id} ";
-        $resultUpdateCommentCount = mysqli_query($connection, $query2);
-          header("Location: comments.php");
+        $query2 = "DELETE FROM `comments` WHERE `comment_id` = '{$comment_id}' ";
+        $result = mysqli_query($connection, $query2);
+        header("Location: comments.php");
       }
 
   }
