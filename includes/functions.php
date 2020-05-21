@@ -51,18 +51,7 @@ function userRegistration() {
     $user_password = mysqli_real_escape_string($connection, $user_password);
     $user_email = mysqli_real_escape_string($connection, $user_email);
 
-    //New Method
-
     $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost '=> 12));
-
-    //Old Method, functional, but not pratical!
-
-    // $queryRandSalt = "SELECT `randSalt` FROM `users` ";
-    // $resultRandSalt = mysqli_query($connection, $queryRandSalt);
-    // $row = mysqli_fetch_array($resultRandSalt);
-    // $randSaltpassword = $row['randSalt'];
-
-    // $user_password = crypt($user_password, $randSaltpassword);
 
     $query = "INSERT INTO `users` ";
     $query .= "(`username`, ";
@@ -96,7 +85,6 @@ function userValidationLogin() {
   $password = $_POST['password'];
 
   $username = mysqli_real_escape_string($connection, $username);
-  // $user_password = mysqli_real_escape_string($connection, $password);
 
   $query = "SELECT * FROM `users` WHERE `username` = '{$username}' ";
   $resultLoginUser = mysqli_query($connection, $query);
@@ -256,7 +244,6 @@ function queyAllUsers() {
       $querycheckUser = "SELECT * FROM `users` ";
       $resultcheckUser = mysqli_query($connection, $querycheckUser);
       $row = mysqli_fetch_array($resultcheckUser);
-      // $randSaltpassword = $row['randSalt'];
       $userPasswordValidation = $row['user_password'];
 
       if ($user_password === $userPasswordValidation) {
@@ -274,7 +261,6 @@ function queyAllUsers() {
       } else {
 
         $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost '=> 12));
-        // $user_password = crypt($user_password, $randSaltpassword);
 
         $query = "UPDATE `users` SET ";
         $query .= "`username` = '{$username}', ";
