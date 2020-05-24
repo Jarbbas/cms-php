@@ -8,7 +8,7 @@ if (isset($_POST['edit_user'])) {
 
 searchUserById();
 
-while ($row = mysqli_fetch_assoc($result)) {
+while ($row = mysqli_fetch_assoc($resultsearchUserById)) {
 
         $user_id= $row['user_id'];
         $username = $row['username'];

@@ -62,26 +62,24 @@ while ($row = mysqli_fetch_assoc($resultAllPosts)) {
         $post_date = $row['post_date'];
         $post_views_count = $row['post_views_count'];
 
-    ?>
+?>
+
       <tr>
       <td><input type="checkbox" class="checkBoxes" name="checkBoxesArray[]" value="<?php echo $post_id; ?>"></td>
 
-    <?php
+<?php
 
-    echo "<td>{$post_id}</td>
-          <td>{$post_author}</td>
-          <td><a href='../post.php?post_id={$post_id}'>{$post_title}</td>";
+    echo "<td>{$post_id}</td>";
+    echo "<td>";
 
-    $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$post_category_id}' ";
-    $resultCatName= mysqli_query($connection, $query);
-    while ($row = mysqli_fetch_assoc($resultCatName)) {
-        $category_name = $row['cat_title'];
-    }
-    if (!$resultCatName) {
-        die('Query' . FAIL . mysqli_error($connection));
-        }
+      searchAuthorId($post_author);
 
-    echo"<td>{$category_name}</td>
+    echo"</td>";
+    echo"<td><a href='../post.php?post_id={$post_id}'>{$post_title}</td><td>";
+
+      selectCategories($post_category_id);
+
+    echo"</td>
     <td>{$post_status}</td>
     <td><img width='100' src='../includes/images/{$post_image}'</img></td>
     <td>{$post_tags}</td>
@@ -91,7 +89,6 @@ while ($row = mysqli_fetch_assoc($resultAllPosts)) {
     <td><a href='posts.php?source=edit&post_id={$post_id}'>Edit</a></td>
     <td><a onClick=\" javascript: return confirm('Are you sure you want to Delete ?'); \" href='posts.php?delete={$post_id}'>Delete</a></td>
     </tr>";
-
 }
 
 if(isset($_GET['delete'])) {
@@ -101,6 +98,7 @@ if(isset($_GET['delete'])) {
 }
 
 ?>
+
 </tbody>
 </table>
 </form>

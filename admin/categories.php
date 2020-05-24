@@ -96,8 +96,8 @@
     <?php
 
     if(isset($_GET['update'])) {
-
-    selectCategories();
+        
+   
     ?>
 
    <div class="col-xs-6">
@@ -107,8 +107,7 @@
 
     <?php
 
-    while ($row = mysqli_fetch_assoc($resultselectCategories)) {
-    $cat_title = $row['cat_title'];
+        $cat_title = selectCategories(1); 
 
     ?>
 
@@ -121,7 +120,7 @@
     <?php
 
     }
-  }
+  
 
     ?>
     <!-- /.col-lg-12 -->

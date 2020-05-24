@@ -3,7 +3,7 @@
    //Frist we create an array with the connection values
     $db['db_host'] = "localhost";
     $db['db_user'] = "root";
-    $db['db_pass'] = "xela";
+    $db['db_pass'] = "";
     $db['db_name'] = "cms";
 
     /**

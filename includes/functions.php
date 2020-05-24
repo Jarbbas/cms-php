@@ -3,30 +3,29 @@
 function users_online() {
 
     if(isset($_GET['onlineusers'])) {
-        global $connection;
-      if (!$connection) {
+      global $connection;
+        if (!$connection) {
+          session_start();
+          include ("db.php");
+          $session = session_id();
+          $time = time();
+          $time_out_in_seconds = 60;
+          $time_out = $time - $time_out_in_seconds;
 
-        session_start();
-        include ("db.php");
-        $session = session_id();
-        $time = time();
-        $time_out_in_seconds = 60;
-        $time_out = $time - $time_out_in_seconds;
+          $query = "SELECT * FROM `users_online` WHERE `session` = '$session'";
+          $send_query = mysqli_query($connection, $query);
+          $count = mysqli_num_rows($send_query);
 
-        $query = "SELECT * FROM `users_online` WHERE `session` = '$session'";
-        $send_query = mysqli_query($connection, $query);
-        $count = mysqli_num_rows($send_query);
+              if ($count == null) {
+                mysqli_query($connection, "INSERT INTO `users_online`(`session`, `time`) VALUES ('$session', '$time')");
+              } else {
+                mysqli_query($connection, "UPDATE `users_online` SET `time` = '$time' WHERE `session` = '$session'");
+              }
 
-            if ($count == null) {
-              mysqli_query($connection, "INSERT INTO `users_online`(`session`, `time`) VALUES ('$session', '$time')");
-            } else {
-              mysqli_query($connection, "UPDATE `users_online` SET `time` = '$time' WHERE `session` = '$session'");
-            }
+          $users_online_query = mysqli_query($connection, "SELECT * FROM `users_online` WHERE `time` > '$time_out'");
+          echo $countUsersOnline = mysqli_num_rows($users_online_query);
 
-        $users_online_query = mysqli_query($connection, "SELECT * FROM `users_online` WHERE `time` > '$time_out'");
-        echo $countUsersOnline = mysqli_num_rows($users_online_query);
-
-    }
+      }
   }//GET REQUEST
 }
 users_online();
@@ -134,20 +133,40 @@ function queyAllUsers() {
   function searchUserById() {
 
       global $connection;
-      global $result;
+      global $resultsearchUserById;
 
       if (isset($_GET['user_id'])) {
-        $user_id = $_GET['user_id'];
-      } else {
-        $user_id = $_SESSION['user_id'];
-      }
+          $user_id = $_GET['user_id'];
+        } else {
+          $user_id = $_SESSION['user_id'];
+        }
 
       $query = "SELECT * FROM `users` WHERE `user_id` = {$user_id} ";
-      $result = mysqli_query($connection, $query);
+      $resultsearchUserById = mysqli_query($connection, $query);
 
-      if (!$result) {
+      if (!$resultsearchUserById) {
           die('Query' . FAIL . mysqli_error($connection));
           }
+
+  }
+
+  function searchAuthorId($post_author) {
+
+      global $connection;
+      global $resultsearchAuthorId;
+
+      $author_id = $post_author;
+
+      $query = "SELECT * FROM `users` WHERE `user_id` = $author_id ";
+      $resultsearchAuthorId = mysqli_query($connection, $query);
+
+        while ($row = mysqli_fetch_assoc($resultsearchAuthorId)) {
+            echo  $username = $row['username'];
+          }
+
+          if (!$resultsearchAuthorId) {
+              die('Query' . FAIL . mysqli_error($connection));
+            }
 
   }
   //CRUD FUNCTIONS FOR USERS
@@ -614,33 +633,26 @@ function bulkOptions($checkBoxValue) {
 
     }
 
-    function selectCategories(){
+    function selectCategories($post_category_id){
 
         global $connection;
         global $resultselectCategories;
 
-        $cat_id =$_GET['update'];
+        if (isset($_GET['update'])) {
+            $cat_id = $_GET['update'];
+        } else {
+            $cat_id = $post_category_id;
+        }
 
         $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
         $resultselectCategories = mysqli_query($connection, $query);
 
         if (!$resultselectCategories) {
             die('Query' . FAIL . mysqli_error($connection));
+          } else {
+            while ($row = mysqli_fetch_assoc($resultselectCategories)) {
+                  echo $category_name = $row['cat_title'];
             }
-    }
-
-    function selectCatName($post_category_id){
-
-        global $connection;
-        global $resultCatName;
-
-        $cat_id = $post_category_id;
-
-        $query = "SELECT * FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
-        $resultCatId = mysqli_query($connection, $query);
-
-      if (!$resultCatId) {
-            die('Query' . FAIL . mysqli_error($connection));
           }
     }
 

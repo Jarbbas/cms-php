@@ -14,7 +14,7 @@ if (isset($_POST['create_post'])) {
             <input type="text" class="form-control" name="post_title">
         </div>
         <div class="form-group">
-            <label for="post_category_id">Post Category Id</label>
+            <label for="post_category_id">Post Category</label>
             <select class="form-control" name="post_category_id">
             <option value='default'>Select an option...</option>
 <?php
@@ -34,8 +34,24 @@ if (isset($_POST['create_post'])) {
         </div>
         <div class="form-group">
             <label for="post_author">Post Author</label>
-            <input type="text" class="form-control" name="post_author">
-        </div>
+            <select class="form-control" name="post_author">
+            <option value='default'>Select an option...</option>
+            <?php
+                //this will fetch users ids and names
+                queyAllUsers();
+
+                while ($row = mysqli_fetch_assoc($resultAllUsers)) {
+                    $user_id = $row['user_id'];
+                    $user_fristname = $row['user_fristname'];
+                    $user_lastname = $row['user_lastname'];
+                    $fullName = $user_fristname . " " . $user_lastname;
+
+                    echo "<option value='{$user_id}'>{$fullName}</option>";
+
+                    }
+            ?>
+                    </select>
+                    </div>
         <div class="form-group">
             <label for="post_status">Post Status</label>
             <select class="form-control" name="post_status" >
