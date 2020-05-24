@@ -160,12 +160,12 @@ function queyAllUsers() {
       $query = "SELECT * FROM `users` WHERE `user_id` = $author_id ";
       $resultsearchAuthorId = mysqli_query($connection, $query);
 
-        while ($row = mysqli_fetch_assoc($resultsearchAuthorId)) {
-            echo  $username = $row['username'];
-          }
-
-          if (!$resultsearchAuthorId) {
+        if (!$resultsearchAuthorId) {
               die('Query' . FAIL . mysqli_error($connection));
+            } else {
+                while ($row = mysqli_fetch_assoc($resultsearchAuthorId)) {
+                    return $username = $row['username'];
+                  }
             }
 
   }
@@ -651,7 +651,7 @@ function bulkOptions($checkBoxValue) {
             die('Query' . FAIL . mysqli_error($connection));
           } else {
             while ($row = mysqli_fetch_assoc($resultselectCategories)) {
-                  echo $category_name = $row['cat_title'];
+                  return $category_name = $row['cat_title'];
             }
           }
     }

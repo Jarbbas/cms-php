@@ -58,18 +58,21 @@
                         $post_image = $row['post_image'];
                         $post_status = $row['post_status'];
                         $post_content = substr($row['post_content'],0, 150);
+                        
+                        $authorName = searchAuthorId($post_author);
 
                         if ($post_status !== 'published') {
                           // echo "<h1>No more posts available</h1>";
 
                         } else {
 
+                        
 
                       echo " <!-- First Blog Post -->
                                 <h2>
                                     <a href='post.php?post_id={$post_id}'>{$post_title}</a>
                                 </h2>
-                                <p class='lead'>by <a href='author_post.php?author={$post_author}&post_id={$post_id}'>{$post_author}</a></p>
+                                <p class='lead'>by <a href='author_post.php?author={$post_author}&post_id={$post_id}'>{$authorName}</a></p>
                                 <p><span class='glyphicon glyphicon-time'></span> Posted on {$post_date}</p>
                                 <hr>
                                 <a href='post.php?post_id={$post_id}'>

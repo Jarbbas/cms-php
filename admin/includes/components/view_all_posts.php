@@ -62,6 +62,9 @@ while ($row = mysqli_fetch_assoc($resultAllPosts)) {
         $post_date = $row['post_date'];
         $post_views_count = $row['post_views_count'];
 
+        $authorName = searchAuthorId($post_author);
+        $categoryName = selectCategories($post_category_id);
+
 ?>
 
       <tr>
@@ -69,26 +72,19 @@ while ($row = mysqli_fetch_assoc($resultAllPosts)) {
 
 <?php
 
-    echo "<td>{$post_id}</td>";
-    echo "<td>";
-
-      searchAuthorId($post_author);
-
-    echo"</td>";
-    echo"<td><a href='../post.php?post_id={$post_id}'>{$post_title}</td><td>";
-
-      selectCategories($post_category_id);
-
-    echo"</td>
-    <td>{$post_status}</td>
-    <td><img width='100' src='../includes/images/{$post_image}'</img></td>
-    <td>{$post_tags}</td>
-    <td><a href='posts.php?source=comment&post_id={$post_id}'>{$post_comment_count}</td>
-    <td>{$post_views_count}</td>
-    <td>{$post_date}</td>
-    <td><a href='posts.php?source=edit&post_id={$post_id}'>Edit</a></td>
-    <td><a onClick=\" javascript: return confirm('Are you sure you want to Delete ?'); \" href='posts.php?delete={$post_id}'>Delete</a></td>
-    </tr>";
+    echo "<td>{$post_id}</td>
+          <td>{$authorName}</td>
+          <td><a href='../post.php?post_id={$post_id}'>{$post_title}</td>
+          <td>{$categoryName}</td>
+          <td>{$post_status}</td>
+          <td><img width='100' src='../includes/images/{$post_image}'</img></td>
+          <td>{$post_tags}</td>
+          <td><a href='posts.php?source=comment&post_id={$post_id}'>{$post_comment_count}</td>
+          <td>{$post_views_count}</td>
+          <td>{$post_date}</td>
+          <td><a href='posts.php?source=edit&post_id={$post_id}'>Edit</a></td>
+          <td><a onClick=\" javascript: return confirm('Are you sure you want to Delete ?'); \" href='posts.php?delete={$post_id}'>Delete</a></td>
+          </tr>";
 }
 
 if(isset($_GET['delete'])) {
