@@ -177,20 +177,27 @@ function queyAllUsers() {
   function insertUser(){
 
       global $connection;
-      global $result;
+      global $resultInsertUser;
 
-      $user_id= $_POST['user_id'];
       $username = $_POST['username'];
-      $user_password= $_POST['user_password'];
+      $user_password = $_POST['user_password'];
       $user_fristname = $_POST['user_fristname'];
       $user_lastname = $_POST['user_lastname'];
       $user_email = $_POST['user_email'];
-      $user_image = $_POST['user_image'];
       $user_role = $_POST['user_role'];
+
+      if (isset($user_image)) {
+        $user_image = $_POST['user_image'];
+      } else {
+        $user_image = "defaultUser.jpg";
+      }
+     
       $user_image = $_FILES['user_image']['name'];
       $user_image_tmp = $_FILES['user_image']['tmp_name'];
 
-      move_uploaded_file($user_image_tmp, "../includes/images/$user_image");
+        move_uploaded_file($user_image_tmp, "../includes/images/$user_image");
+     
+      
 
       // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
       // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
@@ -217,9 +224,9 @@ function queyAllUsers() {
       $query .= "'{$user_email}', ";
       $query .= "'{$user_image}', ";
       $query .= "'{$user_role}') ";
-      $result = mysqli_query($connection, $query);
+      $resultInsertUser = mysqli_query($connection, $query);
 
-      if (!$result) {
+      if (!$resultInsertUser) {
           die('Query' . FAIL . mysqli_error($connection));
       } else {
           echo SUCESS . "a new user was added" . " " . "<a href='users.php'>View Users</a>";
