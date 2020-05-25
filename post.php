@@ -37,11 +37,13 @@
                         $post_image = $row['post_image'];
                         $post_content = $row['post_content'];
 
+                        $authorName = searchAuthorId($post_author);
+
                         echo " <h1 class='page-header'>
                                 {$post_title}
                               </h1>
                         <!-- First Blog Post -->
-                                <p class='lead'>by <a href='index.php'>Start Bootstrap</a></p>
+                                <p class='lead'>by <a href='index.php'>{$authorName}</a></p>
                                 <p><span class='glyphicon glyphicon-time'></span> Posted on {$post_date}</p>
                                 <hr>
                                 <img class='img-responsive' src='includes/images/{$post_image}' alt=''>
