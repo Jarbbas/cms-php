@@ -42,9 +42,10 @@ while ($row = mysqli_fetch_assoc($resultAllUsers)) {
 }
 
 if(isset($_GET['delete'])) {
-
-  deleteUser();
-
+  //validation if the user has authorization to delete user's
+  if (isset($_SESSION['user_role']) && $_SESSION['user_role' == 'administrator']) {  
+    deleteUser();
+  }
 }
 
 ?>

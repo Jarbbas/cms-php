@@ -164,7 +164,11 @@ function queyAllUsers() {
               die('Query' . FAIL . mysqli_error($connection));
             } else {
                 while ($row = mysqli_fetch_assoc($resultsearchAuthorId)) {
-                    return $username = $row['username'];
+                    $username = $row['username'];
+                    $user_fristname = $row['user_fristname'];
+                    $user_lastname = $row['user_lastname'];
+
+                    return $fullName = $user_fristname . " " . $user_lastname;
                   }
             }
 
@@ -306,7 +310,7 @@ function queyAllUsers() {
       global $connection;
       global $result;
 
-      $user_id =$_GET['delete'];
+      $user_id = mysqli_real_escape_string($connection, $_GET['delete']);
 
       $query = "DELETE FROM `users` WHERE `user_id` = '{$user_id}' ";
       $result = mysqli_query($connection, $query);
@@ -501,6 +505,49 @@ function insertPost(){
     }
 }
 
+function updatePost() {
+
+    global $connection;
+    global $resultUpdatePost;
+
+    $post_id = $_GET['post_id'];
+
+    $post_title = $_POST['post_title'];
+    $post_category_id = $_POST['post_category_id'];
+    $post_author = $_POST['post_author'];
+    $post_status = $_POST['post_status'];
+    $post_tags = $_POST['post_tags'];
+    $post_content = $_POST['post_content'];
+    $post_image = $_FILES['post_image']['name'];
+    $post_image_tmp = $_FILES['post_image']['tmp_name'];
+
+    move_uploaded_file($post_image_tmp, "../includes/images/$post_image");
+
+    // mysqli_real_escape_string function is a MUST! it will protect your DataBase, from mysql injection
+    // Bascicly it will sanitize all you string inputs, so it can receive special characters like ()|\/'",. etc
+    $post_title = mysqli_real_escape_string($connection, $post_title);
+    $post_tags = mysqli_real_escape_string($connection, $post_tags);
+    $post_content = mysqli_real_escape_string($connection, $post_content);
+
+    $query = "UPDATE `posts` SET ";
+    $query .= "`post_category_id` = '{$post_category_id}', ";
+    $query .= "`post_title` = '{$post_title}', ";
+    $query .= "`post_author` = '{$post_author}', ";
+    $query .= "`post_date` = now(), ";
+    $query .= "`post_image` = '{$post_image}', ";
+    $query .= "`post_content` = '{$post_content}', ";
+    $query .= "`post_tags` = '{$post_tags}', ";
+    $query .= "`post_status` = '{$post_status}' ";
+    $query .= "WHERE 'post_id' = '{$post_id}' ";
+    $resultUpdatePost = mysqli_query($connection, $query);
+
+    if (!$resultUpdatePost) {
+        die('Query' . FAIL . mysqli_error($connection));
+    } else {
+        echo SUCESS . "<p class='bg-success'>Post was edited. <a href='../post.php?post_id={$post_id}'> View Post</a> or <a href='posts.php?source=edit&post_id={$post_id}'> Edit Post</a></p>";
+    }
+}
+
 function updatePostViewCount() {
 
     global $connection;
@@ -522,7 +569,7 @@ function deletePost() {
     global $connection;
     global $result;
 
-    $post_id =$_GET['delete'];
+    $post_id = mysqli_real_escape_string($connection, $_GET['delete']);
 
     $query = "DELETE FROM `posts` WHERE `post_id` = '{$post_id}' ";
     $result = mysqli_query($connection, $query);
@@ -685,6 +732,7 @@ function bulkOptions($checkBoxValue) {
 
         global $connection;
         global $result;
+
         $cat_id = $_GET['delete'];
 
         $query = "DELETE FROM `categories` WHERE `cat_id` = '{$cat_id}' ";
@@ -836,8 +884,8 @@ function queryAllComments() {
       global $connection;
       global $result;
 
-      $comment_id = $_GET['delete'];
-      $comment_post_id = $_GET['post_id'];
+      $comment_id = mysqli_real_escape_string($connection, $_GET['delete']);
+      $comment_post_id = mysqli_real_escape_string($connection, $_GET['post_id']);
 
       $query = "UPDATE `posts` SET `post_comment_count` = `post_comment_count` - 1 WHERE `post_id` = {$comment_post_id} ";
       $resultUpdateCommentCount = mysqli_query($connection, $query);
