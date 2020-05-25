@@ -1,4 +1,20 @@
 <?php
+function contactUs () {
+
+$msg = "First line of text\nSecond line of text";
+
+// use wordwrap() if lines are longer than 70 characters
+$msg = wordwrap($msg,70);
+
+// send email
+mail("raulafonso88@gmail.com","My subject",$msg);
+
+}
+
+function escape ($string) {
+    global $connection;
+    return mysqli_real_escape_string($connection, trim($string));
+}
 
 function users_online() {
 
