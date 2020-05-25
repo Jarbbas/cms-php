@@ -6,7 +6,7 @@ if (isset($_POST['edit_post'])) {
 
 }
 $postValueId = $_GET['post_id'];
-searchPostById();
+searchPostById($postValueId);
 
 while ($row = mysqli_fetch_assoc($resultPostById)) {
     $post_id = $row['post_id'];
@@ -27,7 +27,7 @@ while ($row = mysqli_fetch_assoc($resultPostById)) {
             <input type="text" class="form-control" name="post_title" value ="<?php echo $post_title; ?>">
         </div>
         <div class="form-group">
-        <select class="form-control" name="post_category" id="">
+        <select class="form-control" name="post_category_id" id="">
 <?php
     queryCountCategories();
     queryAllCategories($countCountCategories);
@@ -45,8 +45,25 @@ while ($row = mysqli_fetch_assoc($resultPostById)) {
         </div>
         <div class="form-group">
             <label for="post_author">Post Author</label>
-            <input type="text" class="form-control" name="post_author" value ="<?php echo $post_author; ?>">
-        </div>
+            <select class="form-control" name="post_author">
+
+            <?php
+                //these functions will fetch users ids and names
+                echo "<option value='default'>" . searchAuthorId($post_author) . "</option>";
+                queyAllUsers();
+
+                while ($row = mysqli_fetch_assoc($resultAllUsers)) {
+                    $user_id = $row['user_id'];
+                    $user_fristname = $row['user_fristname'];
+                    $user_lastname = $row['user_lastname'];
+                    $fullName = $user_fristname . " " . $user_lastname;
+
+                    echo "<option value='{$user_id}'>{$fullName}</option>";
+
+                    }
+            ?>
+                    </select>
+                    </div>
         <div class="form-group">
             <label for="post_status">Post Status</label>
             <select class="form-control" name="post_status">
